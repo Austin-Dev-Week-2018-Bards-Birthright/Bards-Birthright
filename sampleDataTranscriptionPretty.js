@@ -3809,4 +3809,8 @@ input.monologues.forEach((e,i)=>{
   })
 });
 
+
 console.log(output);
+
+
+export default input;

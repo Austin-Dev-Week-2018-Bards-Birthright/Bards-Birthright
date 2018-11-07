@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Transcript from './components/Transcript.js';
+
 require('dotenv').config();
 var DBURL = process.env.REACT_APP_DB_URL;
 var REVKEY = process.env.REACT_APP_REV_API_KEY;
@@ -19,6 +21,7 @@ class App extends Component {
             Learn React
           </a>
         </header>
+        <Transcript />
       </div>;
   }
 }
