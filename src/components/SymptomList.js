@@ -6,14 +6,8 @@ import SYMPTOM_DICTIONARY from '../Symptoms.js';
 class SymptomList extends Component {
   constructor(props) {
     super(props);
-    console.log(SYMPTOM_DICTIONARY);
     this.state = {
       symptoms: [],
-      SYMPTOM_DICTIONARY2: {
-        snake: 'snake',
-        breakfast: 'breakfast',
-        downtown: 'downtown'
-      },
       isAddingSymptom: false,
       newSymptom: ''
     };
