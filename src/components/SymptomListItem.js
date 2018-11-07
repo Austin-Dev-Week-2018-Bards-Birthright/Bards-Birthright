@@ -12,14 +12,23 @@ let CONFIDENCE_DICTIONARY = {
   9: '#62FF00',
   10: '#62FF00'
 };
-class SymptomListItem extends Component {
-  
-  render() {
-    console.log(Math.floor(this.props.symptom.confidence * 10));
-    return <div>
 
-     
-      <b style={{ color: CONFIDENCE_DICTIONARY[Math.floor(this.props.symptom.confidence * 10)]}}>{this.props.symptom.value} </b> <button>save</button> <button>edit</button>
+class SymptomListItem extends Component {
+  constructor(props) {
+    super(props);
+    this.save = function () {
+      console.log('wow you saved! ', this.props.symptom.value);
+    };
+    this.edit = function () {
+      console.log('wow you edited!', this.props.symptom.value);
+    };
+    this.save = this.save.bind(this);
+    this.edit = this.edit.bind(this);
+  }
+
+  render() {
+    return <div>     
+      <b style={{ color: CONFIDENCE_DICTIONARY[Math.floor(this.props.symptom.confidence * 10)]}}>{this.props.symptom.value} </b> <button onClick={this.save}>save</button> <button onClick={this.edit}>edit</button>
       </div>;
   }
 }
