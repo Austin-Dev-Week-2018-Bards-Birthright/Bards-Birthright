@@ -5,9 +5,10 @@ const bodyParser = require('body-parser');
 const axios = require('axios');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static(__dirname + '../public/'));
 
@@ -38,6 +39,14 @@ app.get('/api/retrieve-transcript', (req, res) => {
 
   // res.send(transcripts[id]).status(200);
 });
+
+app.post('/api/audio', bodyParser.raw(), (req, res) => {
+  fs.writeFile('./public/currentAudio.mp3', req.body, (err) => {
+      if (err) throw err;
+      res.send("Success");
+      console.log('The audio file has been saved!');
+  })
+})
 
 let port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`server listening on port ${port}`));
