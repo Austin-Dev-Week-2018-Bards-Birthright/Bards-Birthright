@@ -12,6 +12,7 @@ class Player extends Component {
   clickJump() {
     if (this.props.timeStamp) {
       document.querySelector('audio#playback').currentTime = this.props.timeStamp;
+      document.querySelector('audio#playback').play();
     }
     
   }
