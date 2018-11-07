@@ -60,7 +60,7 @@ class Recorder extends Component {
     oReq.setRequestHeader('Content-Type', 'application/octet-stream');
     oReq.send(this.state.blob);
   }
-  
+
 
   dynamicColor() {
     if (this.state.liveRec) {
@@ -76,7 +76,10 @@ class Recorder extends Component {
         <audio id="recording" src={this.state.recordingSrc} controls></audio>
         <a id="downloadButton" className="button" href={this.state.recordingSrc} download="test.mp3">
           Download
-      </a>
+        </a>
+        <button id="uploadButton" className="button" onClick={() => this.clickUpload()}>
+          Upload
+        </button>
       </>);
     }
   }
@@ -90,13 +93,6 @@ class Recorder extends Component {
           Start
         </button>
         <button id="stopBtn" onClick={() => this.clickStop()}>Stop</button>
-        <audio id="recording" src={this.state.recordingSrc} controls></audio>
-        <a id="downloadButton" className="button" href={this.state.recordingSrc} download="test.mp3">
-          Download
-        </a>
-        <button id="uploadButton" className="button" onClick={() => this.clickUpload()}>
-          Upload
-        </button>
         {this.doneRecording()}
       </div>
     );

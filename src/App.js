@@ -30,17 +30,16 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+          <Recorder></Recorder>
           <p>
             Check console logs to see your keys
           </p>
-        <SymptomList />
+          <SymptomList />
           <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
             Learn React
           </a>
         </header>
-        <Recorder></Recorder>
-        <Transcript getTimeStamp={this.getTimeStamp}/>
+        <Transcript getTimeStamp={this.getTimeStamp} />
         <Player timeStamp={this.state.timeStamp}></Player>
       </div >
     );
