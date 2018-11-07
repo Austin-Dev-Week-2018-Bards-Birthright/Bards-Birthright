@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import '../App.css';
+import SymptomListItem from './SymptomListItem.js'
 import { input, output } from '../sampleDataTranscriptionPretty.js';
 
-class Symptoms extends Component {
+class SymptomList extends Component {
 
   constructor(props) {
     super(props);
@@ -31,11 +32,11 @@ componentDidMount() {
       <div className="Symptoms">
       <p>Here is your list of symptoms we found: </p>
         {this.state.symptoms.map((item, i) => {
-          return <p key={i}> {item} </p>;
+          return <SymptomListItem key={i} symptom={item} />
         })}
       </div>
     );
   }
 }
 
-export default Symptoms;
+export default SymptomList;
