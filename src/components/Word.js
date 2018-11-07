@@ -11,7 +11,10 @@ class Word extends React.Component {
 
 	render() {
 		return (
-			<span>
+			<span onClick={()=> {
+				this.props.getTimeStamp(this.state.element.ts);
+				console.log('clicked');
+			}}>
 				{this.state.element.value}
 			</span>
 		)

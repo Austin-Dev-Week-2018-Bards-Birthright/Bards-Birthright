@@ -4,20 +4,20 @@ class Player extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      audioSrc: 'muhammadSpeech.mp4', 
+      audioSrc: 'currentAudio.mp3', 
       currentTime: 10
     };
   }
 
-  componentDidMount() {
-
-  }
-
   clickJump() {
-    document.querySelector('audio#playback').currentTime = this.state.currentTime;
+    if (this.props.timeStamp) {
+      document.querySelector('audio#playback').currentTime = this.props.timeStamp;
+    }
+    
   }
 
   render() {
+    this.clickJump();
     return (
       <div>
         <button id="jumpBtn" onClick={() => this.clickJump()}>Jump</button>
