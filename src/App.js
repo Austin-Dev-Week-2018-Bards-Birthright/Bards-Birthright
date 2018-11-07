@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Transcript from './components/Transcript.js';
+
 import SymptomList from './components/SymptomList.js';
 import Recorder from './components/Recorder';
 import Player from './components/Player';
@@ -25,6 +27,7 @@ class App extends Component {
           </a>
         </header>
         <Recorder></Recorder>
+        <Transcript />
         <Player></Player>
       </div >
     );

@@ -1,3 +1,5 @@
+import React from 'react';
+import Paragraph from './Paragraph.js';
 const input = {
   "monologues": [
     {
@@ -3801,16 +3803,27 @@ const input = {
   ]
 }
 
-// console.log(input.monologues[0]);
-let output = '';
-input.monologues.forEach((e,i)=>{
-  e.elements.forEach((e,i)=>{
-    output = output + e.value;
-  })
-});
 
+class Transcript extends React.Component {
+  constructor(props) {
+		super(props);
+		this.state = {
+			input: input
+		}
 
-console.log(output);
+	}
 
+	render() {
+		return (
+			<div>
+        {
+					this.state.input.monologues.map((element, index) => {
+						return <Paragraph key={index} monologue={element} />
+					})
+				}
+			</div>
+		)
+	}
+}
 
-export default input;
+export default Transcript;
