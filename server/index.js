@@ -16,6 +16,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
+// Submit audio file for transcription
 app.post('/api/transcribe', (req, res) => {
   let { file_url } = req.body;
   
@@ -31,6 +32,7 @@ app.post('/api/transcribe', (req, res) => {
     .catch(console.log);
 });
 
+// retrieve completed transcript for transcript_id
 app.get('/api/retrieve-transcript', (req, res) => {
   let { transcript_id } = req.body;
 
