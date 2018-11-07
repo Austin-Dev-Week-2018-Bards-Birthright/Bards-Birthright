@@ -3818,7 +3818,7 @@ class Transcript extends React.Component {
 			<div>
         {
 					this.state.input.monologues.map((element, index) => {
-						return <Paragraph key={index} monologue={element} />
+						return <Paragraph key={index} monologue={element} getTimeStamp={this.props.getTimeStamp}/>
 					})
 				}
 			</div>

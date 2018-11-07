@@ -19,7 +19,7 @@ class Paragraph extends React.Component {
 				<div>
 					{
 						this.state.content.elements.map((element, index) => {
-							return <Word key={index} element={element} />
+							return <Word key={index} element={element} getTimeStamp={this.props.getTimeStamp}/>
 						})
 					}
 				</div>
