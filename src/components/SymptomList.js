@@ -31,7 +31,7 @@ componentDidMount() {
   render() {
     console.log(this.state.SYMPTOMS);
     return (
-      <div className="Symptoms">
+      <div className="SymptomList">
       <p>Here is your list of symptoms we found: </p>
         {this.state.symptoms.map((item, i) => {
           return <SymptomListItem key={i} symptom={item} />
