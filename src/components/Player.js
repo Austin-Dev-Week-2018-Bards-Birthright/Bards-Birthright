@@ -4,13 +4,9 @@ class Player extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      audioSrc: 'muhammadSpeech.mp4', 
+      audioSrc: 'currentAudio.mp3', 
       currentTime: 10
     };
-  }
-
-  componentDidMount() {
-
   }
 
   clickJump() {
