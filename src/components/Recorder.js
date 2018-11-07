@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../css/Recorder.css';
 
 class Recorder extends Component {
   constructor(props) {
@@ -7,6 +8,7 @@ class Recorder extends Component {
     this.clickStart = this.clickStart.bind(this);
     this.clickStop = this.clickStop.bind(this);
     this.dynamicColor = this.dynamicColor.bind(this);
+    this.doneRecording = this.doneRecording.bind(this);
   }
 
   startRecording(stream) {
@@ -55,18 +57,27 @@ class Recorder extends Component {
     }
   }
 
+  doneRecording() {
+    if (this.state.recordingSrc) {
+      return (<>
+        <audio id="recording" src={this.state.recordingSrc} controls></audio>
+        <a id="downloadButton" className="button" href={this.state.recordingSrc} download="test.mp3">
+          Download
+      </a>
+      </>);
+    }
+  }
+
   render() {
 
     return (
       <div style={{ background: this.dynamicColor() }}>
+        {this.state.liveRec ? <h1>YOU ARE LIVE RECORDING</h1> : <p>click start to record audio</p>}
         <button id="startBtn" onClick={() => this.clickStart()}>
           Start
         </button>
         <button id="stopBtn" onClick={() => this.clickStop()}>Stop</button>
-        <audio id="recording" src={this.state.recordingSrc} controls></audio>
-        <a id="downloadButton" className="button" href={this.state.recordingSrc} download="test.mp3">
-          Download
-        </a>
+        {this.doneRecording()}
       </div>
     );
   }
