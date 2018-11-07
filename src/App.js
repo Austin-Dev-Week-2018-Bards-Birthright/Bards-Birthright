@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Recorder from './components/Recorder';
 
 class App extends Component {
   render() {
@@ -20,6 +21,7 @@ class App extends Component {
             Learn React
           </a>
         </header>
+        <Recorder></Recorder>
       </div>
     );
   }
