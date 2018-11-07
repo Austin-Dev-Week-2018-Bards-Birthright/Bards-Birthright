@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import SymptomList from './components/SymptomList.js';
 import Recorder from './components/Recorder';
 require('dotenv').config();
 var DBURL = process.env.REACT_APP_DB_URL;
@@ -17,6 +18,7 @@ class App extends Component {
           <p>
             Check console logs to see your keys
           </p>
+        <SymptomList />
           <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
             Learn React
           </a>
