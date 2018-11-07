@@ -30,7 +30,7 @@ class SymptomListItem extends Component {
     };
 
     this.changeText = function (e) {
-      this.setState({ symptom: { ...this.state.symptom, value: e.target.value, confidence: 1 }}) 
+      this.setState({ symptom: { ...this.state.symptom, value: e.target.value, confidence: 1 } }) 
     }
     this.save = this.save.bind(this);
     this.edit = this.edit.bind(this);
@@ -50,7 +50,6 @@ class SymptomListItem extends Component {
       <button onClick={this.save}>save</button> 
       <button onClick={this.edit}>edit</button>
       </div>
-      
       )
   }
 }
