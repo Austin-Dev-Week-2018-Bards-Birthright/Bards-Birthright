@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import '../App.css';
 import SymptomListItem from './SymptomListItem.js';
 import { input, output } from '../sampleDataTranscriptionPretty.js';
-
+import SYMPTOM_DICTIONARY from '../Symptoms.js';
 class SymptomList extends Component {
   constructor(props) {
     super(props);
+    console.log(SYMPTOM_DICTIONARY);
     this.state = {
       symptoms: [],
-      SYMPTOM_DICTIONARY: {
+      SYMPTOM_DICTIONARY2: {
         snake: 'snake',
         breakfast: 'breakfast',
         downtown: 'downtown'
@@ -37,7 +38,7 @@ class SymptomList extends Component {
     let symptoms = [];
     input.monologues.forEach(speaker => {
       speaker.elements.forEach(textChunk => {
-        if (this.state.SYMPTOM_DICTIONARY[textChunk.value]) {
+        if (SYMPTOM_DICTIONARY[textChunk.value]) {
           symptoms.push(textChunk);
         }
       });
