@@ -46,7 +46,6 @@ class SymptomList extends Component {
   }
 
   render() {
-    console.log(this.state.symptoms);
     return (
       <div className="SymptomList">
         <p>Here is your list of symptoms we found: </p>
