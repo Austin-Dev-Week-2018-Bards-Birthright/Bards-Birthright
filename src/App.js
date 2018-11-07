@@ -3,7 +3,9 @@ import logo from './logo.svg';
 import './App.css';
 import Transcript from './components/Transcript.js';
 
+import SymptomList from './components/SymptomList.js';
 import Recorder from './components/Recorder';
+import Player from './components/Player';
 require('dotenv').config();
 var DBURL = process.env.REACT_APP_DB_URL;
 var REVKEY = process.env.REACT_APP_REV_API_KEY;
@@ -19,12 +21,14 @@ class App extends Component {
           <p>
             Check console logs to see your keys
           </p>
+        <SymptomList />
           <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
             Learn React
           </a>
         </header>
         <Recorder></Recorder>
         <Transcript />
+        <Player></Player>
       </div >
     );
   }
