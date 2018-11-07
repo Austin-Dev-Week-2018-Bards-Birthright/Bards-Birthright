@@ -20,7 +20,9 @@ componentDidMount() {
   let symptoms = [];
   input.monologues.forEach(speaker => {
     speaker.elements.forEach(textChunk => {
-      symptoms.push(this.state.SYMPTOM_DICTIONARY[textChunk.value]); 
+      if (this.state.SYMPTOM_DICTIONARY[textChunk.value]) {
+        symptoms.push(this.state.SYMPTOM_DICTIONARY[textChunk.value]); 
+      } 
     });
   }) 
   this.setState({symptoms})
@@ -34,6 +36,7 @@ componentDidMount() {
         {this.state.symptoms.map((item, i) => {
           return <SymptomListItem key={i} symptom={item} />
         })}
+        Add A Symptom <button>Add!</button>
       </div>
     );
   }

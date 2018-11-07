@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 
 class SymptomListItem extends Component {
   render() {
-    return <p>{this.props.symptom}</p>;
+    return <div>
+        {this.props.symptom}  <button>save</button> <button>edit</button>
+      </div>;
   }
 }
 
