@@ -17,7 +17,24 @@ app.get('/', (req, res) => {
 });
 
 app.post('/api/transcribe', (req, res) => {
+  let { file_url } = req.body;
   
+  let headers = {
+      'Authorization': `Bearer ${process.env.REV_API_KEY}`
+    };
+
+  axios.post(`${process.env.REV_BASE_URL}/jobs`, { 'Content-Type': 'application/json', 'media_url': file_url }, { headers: headers })
+    .then( ({ data }) => {
+      console.log('job submitted: ', data);
+      res.send('job submitted successfully').status(200);
+    })
+    .catch(console.log);
+});
+
+app.get('/api/retrieve-transcript', (req, res) => {
+  let { transcript_id } = req.body;
+
+  // res.send(transcripts[id]).status(200);
 });
 
 let port = process.env.PORT || 8080;
