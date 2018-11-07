@@ -20,8 +20,9 @@ componentDidMount() {
   let symptoms = [];
   input.monologues.forEach(speaker => {
     speaker.elements.forEach(textChunk => {
+      // console.log(textChunk);
       if (this.state.SYMPTOM_DICTIONARY[textChunk.value]) {
-        symptoms.push(this.state.SYMPTOM_DICTIONARY[textChunk.value]); 
+        symptoms.push(textChunk); 
       } 
     });
   }) 
