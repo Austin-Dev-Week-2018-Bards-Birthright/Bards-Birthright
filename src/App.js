@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import SymptomList from './components/SymptomList.js';
 import Recorder from './components/Recorder';
+import Player from './components/Player';
 require('dotenv').config();
 var DBURL = process.env.REACT_APP_DB_URL;
 var REVKEY = process.env.REACT_APP_REV_API_KEY;
@@ -24,6 +25,7 @@ class App extends Component {
           </a>
         </header>
         <Recorder></Recorder>
+        <Player></Player>
       </div >
     );
   }
