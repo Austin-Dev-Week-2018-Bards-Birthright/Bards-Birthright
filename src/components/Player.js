@@ -10,10 +10,14 @@ class Player extends Component {
   }
 
   clickJump() {
-    document.querySelector('audio#playback').currentTime = this.state.currentTime;
+    if (this.props.timeStamp) {
+      document.querySelector('audio#playback').currentTime = this.props.timeStamp;
+    }
+    
   }
 
   render() {
+    this.clickJump();
     return (
       <div>
         <button id="jumpBtn" onClick={() => this.clickJump()}>Jump</button>

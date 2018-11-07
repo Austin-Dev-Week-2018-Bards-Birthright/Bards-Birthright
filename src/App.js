@@ -13,6 +13,19 @@ var REVKEY = process.env.REACT_APP_REV_API_KEY;
 console.log('your rev key is: ', REVKEY);
 console.log('your DBURL is: ', DBURL);
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      timeStamp: 0
+    }
+    this.getTimeStamp = this.getTimeStamp.bind(this);
+  }
+
+  getTimeStamp(timeStamp) {
+    this.setState({
+      timeStamp: timeStamp
+    })
+  }
   render() {
     return (
       <div className="App">
@@ -27,8 +40,8 @@ class App extends Component {
           </a>
         </header>
         <Recorder></Recorder>
-        <Transcript />
-        <Player></Player>
+        <Transcript getTimeStamp={this.getTimeStamp}/>
+        <Player timeStamp={this.state.timeStamp}></Player>
       </div >
     );
   }
