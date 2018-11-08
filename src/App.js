@@ -29,6 +29,7 @@ class App extends Component {
     this.changePage = this.changePage.bind(this);
     this.getTranscriptData = this.getTranscriptData.bind(this);
     this.uploadRecording = this.uploadRecording.bind(this);
+    this.printPage = this.printPage.bind(this);
   }
 
   getTimeStamp(timeStamp) {
@@ -76,6 +77,19 @@ class App extends Component {
     oReq.send(blob);
   }
 
+  printPage() {
+    let newIframe = document.createElement('iframe');
+    newIframe.setAttribute('style', 'visibility: hidden');
+    newIframe.setAttribute('src', 'http://localhost:8080/');
+
+    let scriptTag = document.createElement('script');
+    scriptTag.setAttribute('type', 'text/javascript');
+    scriptTag.text = 'window.print()';
+
+    newIframe.appendChild(scriptTag);
+    document.body.append(newIframe);
+  }
+
   renderPage() {
     if (this.state.page === 'recorder') {
       return (<>
@@ -92,14 +106,11 @@ class App extends Component {
         </>;
     }
   }
-
   
-
   render() {
     return (
-
       <>
-        <Navbar changePage={this.changePage} />
+        <Navbar changePage={this.changePage} printPage={this.printPage}/>
         <div className="App">
           <header className="App-header">
             <h1>Transcript Buddy</h1>
