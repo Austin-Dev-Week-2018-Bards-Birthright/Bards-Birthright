@@ -168,7 +168,7 @@ class App extends Component {
         <VoiceActivation tellRecorderToSaveCurrentAudioStream={this.tellRecorderToSaveCurrentAudioStream} tellRecorderToStartRecording={this.tellRecorderToStartRecording} />
         <div className="App">
           <header className="App-header">
-            <h1>Transcript Buddy</h1>
+            <h1>Clover</h1>
             {this.renderPage()}
           </header>
         </div>
