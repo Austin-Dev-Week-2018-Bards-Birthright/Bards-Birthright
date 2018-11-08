@@ -47,6 +47,7 @@ class Recorder extends Component {
     this.state.recordPointer.state === "recording" && this.state.recordPointer.stop();
     this.state.streamPointer.getTracks().forEach(track => track.stop());
     this.setState({ liveRec: false });
+    setTimeout(() => this.props.uploadRecording(this.state.blob), 5000);
   }
 
   dynamicColor() {
@@ -61,12 +62,6 @@ class Recorder extends Component {
     if (this.state.recordingSrc) {
       return (<>
         <audio id="recording" src={this.state.recordingSrc} controls></audio>
-        <a id="downloadButton" className="button" href={this.state.recordingSrc} download="test.mp3">
-          Download
-        </a>
-        <button id="uploadButton" className="button" onClick={() => this.props.uploadRecording(this.state.blob)}>
-          Upload
-        </button>
       </>);
     }
   }
@@ -82,7 +77,7 @@ class Recorder extends Component {
     } else {
       return (
         <>
-          <h2>click start to record audio</h2>
+          <h2>click button to record audio</h2>
           <button id="startBtn" onClick={() => this.clickStart()}>
             Record
           </button>
