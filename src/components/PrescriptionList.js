@@ -62,10 +62,10 @@ class PrescriptionList extends Component {
               Confirm
             </button>
           </div> : <div>
-            Add A Prescription <button className="btn-xs" onClick={() => this.setState(
+            Add A Prescription <button className="add btn-xs" onClick={() => this.setState(
                   { isAddingPrescription: true }
                 )}>
-              Add!
+              <i class="add fas fa-plus"></i>
             </button>
           </div>}
       </div>;
