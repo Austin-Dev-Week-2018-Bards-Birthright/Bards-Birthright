@@ -9,8 +9,8 @@ const Navbar = (props) => {
       </button>
       <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div className="navbar-nav">
-          <a className="nav-item nav-link" href={`#`} onClick={() => props.changePage('recorder')}>Recorder</a>
-          <a className="nav-item nav-link" href={`#`} onClick={() => props.changePage('transcript')}>Transcript</a>
+          <a className="nav-item nav-link" href="#" onClick={() => props.changePage('recorder')}>Recorder</a>
+          <a className="nav-item nav-link" href="#" onClick={() => props.changePage('transcript')}>Transcript</a>
         </div>
       </div>
     </nav>
