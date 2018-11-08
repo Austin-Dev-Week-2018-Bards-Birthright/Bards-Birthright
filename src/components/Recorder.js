@@ -11,6 +11,12 @@ class Recorder extends Component {
     this.doneRecording = this.doneRecording.bind(this);
   }
 
+  componentWillReceiveProps(newProps) {
+    console.log('new props: ', newProps)
+    if (newProps.recordingState === 'on') this.clickStart();
+    else if (this.state.liveRec && newProps.recordingState === 'off') this.clickStop();
+  }
+
   startRecording(stream) {
     let recorder = new MediaRecorder(stream);
     this.setState({ recordPointer: recorder });

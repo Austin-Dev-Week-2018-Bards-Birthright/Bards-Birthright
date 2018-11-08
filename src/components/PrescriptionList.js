@@ -10,7 +10,8 @@ class PrescriptionList extends Component {
       prescriptions: [],
       isAddingPrescription: false,
       newPrescription: '',
-      output
+      output,
+      prescriptionData: {}
     }; 
     this.changeText = function(e) {
       this.setState({ newPrescription: e.target.value });
@@ -27,16 +28,6 @@ class PrescriptionList extends Component {
     this.confirmPrescription = this.confirmPrescription.bind(this);
   }
   componentDidMount() {
-    let prescriptions = [];
-    input.monologues.forEach(speaker => {
-      speaker.elements.forEach(textChunk => {
-        if (PRESCRIPTION_DICTIONARY[textChunk.value]) {
-          prescriptions.push(textChunk);
-        }
-      });
-    });
-    this.setState({ prescriptions });
-
     this.sentences = [];
     let sentence = '';
     Array.from(this.state.output).forEach((e)=> {
@@ -49,6 +40,42 @@ class PrescriptionList extends Component {
     });
 
   }
+
+  componentWillReceiveProps(props) {
+    // console.log('new props SymptomList', props.transcriptData);
+    this.setState({ prescriptionData: props.transcriptData }, () => {
+      // console.log('transcript data', this.state.prescriptionData);
+      let prescriptions = [];
+      // console.log('object keys length ', Object.keys(this.state.prescriptionData).length);
+      if (Object.keys(this.state.prescriptionData).length) {
+        this.state.prescriptionData.monologues.forEach(speaker => {
+          // console.log('speaker: ', speaker);
+          speaker.elements.forEach(textChunk => {
+            // console.log('textchunk ', textChunk);
+            if (PRESCRIPTION_DICTIONARY[textChunk.value.toLowerCase()]) {
+              console.log('found a drug', textChunk.value);
+              prescriptions.push(textChunk);
+            }
+          });
+        });
+      }
+      this.setState({ prescriptions });
+    }
+    )
+  }
+  // componentWillReceiveProps(props) {
+
+  //   let prescriptions = [];
+  //   input.monologues.forEach(speaker => {
+  //     speaker.elements.forEach(textChunk => {
+  //       if (PRESCRIPTION_DICTIONARY[textChunk.value]) {
+  //         prescriptions.push(textChunk);
+  //       }
+  //     });
+  //   });
+  //   this.setState({ prescriptions });
+
+  // }
 
   render() {
     return <div className="List">
