@@ -143,9 +143,5 @@ app.get('/api/retrieve-transcript', (req, res) => {
   // res.send(transcripts[id]).status(200);
 });
 
-app.post('/api/audio', bodyParser.raw(), (req, res) => {
-  
-});
-
-let port = 3000;
+let port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`server listening on port ${port}`));
