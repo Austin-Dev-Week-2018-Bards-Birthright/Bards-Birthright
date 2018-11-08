@@ -23,7 +23,8 @@ let cache = {
   symptoms: { }
 };
 
-wiki.titleLookup('Sweating');
+// wiki.titleLookup('nausea', console.log);
+// console.log('test', wiki.titleLookup('nausea'));
 /**
  *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  *   REV API UTIL FUNCTIONS
