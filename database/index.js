@@ -1,4 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
+require('dotenv').config();
 const url = process.env.DATABASE_URL;
 
 const dbName = 'bardsbirthright';
