@@ -11,6 +11,7 @@ const Navbar = (props) => {
         <div className="navbar-nav">
           <a className="nav-item nav-link" href="#" onClick={() => props.changePage('recorder')}>Recorder</a>
           <a className="nav-item nav-link" href="#" onClick={() => props.changePage('transcript')}>Transcript</a>
+          <a className="nav-item nav-link" href="#" onClick={() => props.printPage()}>Print to PDF</a>
         </div>
       </div>
     </nav>
