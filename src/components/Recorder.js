@@ -72,7 +72,7 @@ class Recorder extends Component {
         <div className="container">
           <>
             <h1>LIVE RECORDING</h1>
-            <div className="blink" id="stopBtn" onClick={() => this.clickStop()}><i class="far fa-stop-circle"></i></div>
+            <div className="blink" id="stopBtn" onClick={() => this.clickStop()}><i className="far fa-stop-circle"></i></div>
           </>
         </div>
 
@@ -83,7 +83,7 @@ class Recorder extends Component {
           <>
             <h2>click to record audio</h2>
             <div id="startBtn" onClick={() => this.clickStart()}>
-              <i class="material-icons">&#xe39e;</i>
+              <i className="material-icons">&#xe39e;</i>
             </div>
           </>
         </div>
