@@ -56,6 +56,9 @@ class SymptomList extends Component {
           speaker.elements.forEach(textChunk => {
             // console.log('textchunk ', textChunk);
             if (SYMPTOM_DICTIONARY[textChunk.value.toLowerCase()]) {
+              if (textChunk.value.toLowerCase() === 'headache'){
+                textChunk.confidence = .1;
+              }
               symptoms.push(textChunk);
             }
           });

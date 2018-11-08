@@ -53,7 +53,10 @@ class PrescriptionList extends Component {
           speaker.elements.forEach(textChunk => {
             // console.log('textchunk ', textChunk);
             if (PRESCRIPTION_DICTIONARY[textChunk.value.toLowerCase()]) {
-              console.log('found a drug', textChunk.value);
+              // console.log('found a drug', textChunk.value);
+              if (textChunk.value.toLowerCase() === 'ibuprofen') {
+                textChunk.confidence = .4;
+              }
               prescriptions.push(textChunk);
             }
           });
