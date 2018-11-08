@@ -19,7 +19,8 @@ app.use(express.static(__dirname + '../public/'));
 let cache = {
   completedTranscriptJobs: { },
   prescriptions: { },
-  symptoms: { }
+  symptoms: { },
+  fileNames: { }
 };
 
 /**
@@ -38,7 +39,7 @@ const loadCompletedTranscriptJobIntoMemory = (transcriptJobId) => {
   axios.get(`${process.env.REV_BASE_URL}/jobs/${transcriptJobId}/transcript`, { headers: headers })
     .then(transcript => {
       cache.completedTranscriptJobs[transcriptJobId] = transcript.data.monologues;
-      let transcriptJobObj = { id: transcriptJobId, monologues: transcript.data.monologues };
+      let transcriptJobObj = { id: transcriptJobId, monologues: transcript.data.monologues, fileName:  cache.fileNames[transcriptJobId]};
       db.insertTranscriptJobs(transcriptJobObj, (err, _) => {
         if (err) console.log(`error persisting transcript job ${transcriptJobId} to DB: ${err}`);
         else console.log(`successfully persisted transcription job ${transcriptJobId} to DB`);
@@ -147,9 +148,11 @@ app.post('/api/transcribe', bodyParser.raw({ limit: '50mb' }), (req, res) => {
       if (err) console.log(err);
       else {
         const transcriptJobId = JSON.parse(result.body).id;
+        const mp4FileName = file_url.split('/')[file_url.split('/').length - 1];
         console.log('job submitted: ', transcriptJobId);
         startTranscriptionJobPolling(transcriptJobId);
-        res.send({'fileName': file_url.split('/')[file_url.split('/').length - 1], 'transcriptJobId': transcriptJobId}).status(200);
+        cache.fileNames[transcriptJobId] = mp4FileName;
+        res.send({'fileName': mp4FileName, 'transcriptJobId': transcriptJobId}).status(200);
       }
     });
   });

@@ -4,7 +4,7 @@ class Player extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      audioSrc: this.props.currentAudioFile, 
+      // audioSrc: this.props.transcriptData.currentAudioFile, 
       currentTime: 10
     };
   }
@@ -19,13 +19,15 @@ class Player extends Component {
 
   render() {
     this.clickJump();
-    return (
+    return (<>
+      {this.props.transcriptData !== null &&
       <div>
         <audio id="playback" controls>
-          <source src={this.state.audioSrc} type="audio/mp4"></source>
+          <source src={this.props.transcriptData.fileName} type="audio/mp4"></source>
         </audio>
       </div>
-    );
+      }
+    </>);
   }
 };
 
