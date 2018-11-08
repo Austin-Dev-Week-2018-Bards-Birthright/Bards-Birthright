@@ -1,5 +1,6 @@
 import React from 'react';
 import Paragraph from './Paragraph.js';
+// eslint-disable-next-line no-unused-vars
 import { input, output } from '../sampleDataTranscriptionPretty.js';
 
 class Transcript extends React.Component {
