@@ -37,9 +37,12 @@ const loadCompletedTranscriptJobIntoMemory = (transcriptJobId) => {
 
   axios.get(`${process.env.REV_BASE_URL}/jobs/${transcriptJobId}/transcript`, { headers: headers })
     .then(transcript => {
-      console.log(transcript.data.monologues);
       cache.completedTranscriptJobs[transcriptJobId] = transcript.data.monologues;
-      console.log('cache: ', cache);
+      let transcriptJobObj = { id: transcriptJobId, monologues: transcript.data.monologues };
+      db.insertTranscriptJobs(transcriptJobObj, (err, _) => {
+        if (err) console.log(`error persisting transcript job ${transcriptJobId} to DB: ${err}`);
+        else console.log(`successfully persisted transcription job ${transcriptJobId} to DB`);
+      });
     })
     .catch(console.log);
 };
@@ -54,11 +57,6 @@ const reloadCompletedTranscriptJobIntoMemory = (transcriptJobId) => {
     .then(transcript => {
       console.log(transcript.data.monologues);
       cache.completedTranscriptJobs[transcriptJobId] = transcript.data.monologues;
-      let transcriptJobObj = { id: transcriptJobId, monologues: transcript.data.monologues };
-      db.insertTranscriptJobs(transcriptJobObj, (err, _) => {
-        if (err) console.log(`error persisting transcript job ${transcriptJobId} to DB: ${err}`);
-        else console.log(`successfully persisted transcription job ${transcriptJobId} to DB`);
-      });
     })
     .catch(console.log);
 };
