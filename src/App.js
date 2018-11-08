@@ -138,7 +138,7 @@ class App extends Component {
             <PrescriptionList transcriptData={this.state.transcriptData} />
           </div>
           <Transcript getTimeStamp={this.getTimeStamp} transcriptData={this.state.transcriptData} />
-          <Player timeStamp={this.state.timeStamp} currentAudioFile={this.state.currentAudioFile} />
+          <Player timeStamp={this.state.timeStamp} transcriptData={this.state.transcriptData} />
         </>;
     }
   }
