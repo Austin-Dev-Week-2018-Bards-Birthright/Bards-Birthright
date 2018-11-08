@@ -9,7 +9,9 @@ class SymptomList extends Component {
     this.state = {
       symptoms: [],
       isAddingSymptom: false,
-      newSymptom: ''
+      isClicked: false,
+      newSymptom: '',
+      output
     };
 
     this.changeText = function(e) {
@@ -29,6 +31,20 @@ class SymptomList extends Component {
     this.confirmSymptom = this.confirmSymptom.bind(this);
   }
   componentDidMount() {
+    this.sentences = [];
+    let sentence = '';
+    Array.from(this.state.output).forEach((e)=> {
+      if (e === '.' || e === '?') {
+        this.sentences.push(sentence + e)
+        sentence = ''
+      } else {
+        sentence += e;
+      }
+    });
+
+
+
+
     let symptoms = [];
     if (input.symptoms.length < 1){
     input.monologues.forEach(speaker => {
@@ -50,7 +66,7 @@ class SymptomList extends Component {
       <div className="List">
         <p>Here is your list of symptoms we found: </p>
         {this.state.symptoms.map((item, i) => {
-          return <SymptomListItem key={i} symptom={item} />;
+          return <SymptomListItem key={i} symptom={item} sentences={this.sentences}/>;
         })}
         {this.state.isAddingSymptom ? (
           <div>
