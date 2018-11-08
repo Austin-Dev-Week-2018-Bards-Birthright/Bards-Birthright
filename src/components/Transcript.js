@@ -9,7 +9,7 @@ class Transcript extends React.Component {
 		this.state = {
 			input: input
 		}
-
+console.log('props', props);
 	}
 
 	render() {
