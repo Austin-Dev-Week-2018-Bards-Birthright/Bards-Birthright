@@ -9,8 +9,8 @@ const fs = require('fs');
 const request = require('request');
 const uuidv1 = require('uuid/v1');
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
+app.use(bodyParser.json({ limit: '10mb', extended: true }));
 app.use(cors());
 app.use(express.static(__dirname + '../public/'));
 

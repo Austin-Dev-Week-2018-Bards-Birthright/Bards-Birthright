@@ -1,4 +1,5 @@
 const input = {
+  symptoms: [],
   monologues: [
     {
       speaker: 1,
@@ -159,7 +160,7 @@ const input = {
         },
         {
           type: 'text',
-          value: 'no',
+          value: 'ibuprofen',
           ts: 25.279999999999998,
           end_ts: 25.45,
           confidence: 0.5
@@ -984,7 +985,7 @@ const input = {
         },
         {
           type: 'text',
-          value: 'into',
+          value: 'oxygen',
           ts: 59.51,
           end_ts: 59.75,
           confidence: 0.99
@@ -2040,7 +2041,7 @@ const input = {
         },
         {
           type: 'text',
-          value: 'that',
+          value: 'ramipril',
           ts: 114.13,
           end_ts: 114.38,
           confidence: 0.48
@@ -2458,7 +2459,7 @@ const input = {
         },
         {
           type: 'text',
-          value: 'opened',
+          value: 'sunscreen',
           ts: 131.07999999999998,
           end_ts: 131.38,
           confidence: 0.79
@@ -2710,7 +2711,7 @@ const input = {
         },
         {
           type: 'text',
-          value: 'of',
+          value: 'acarbose',
           ts: 181.47,
           end_ts: 181.67,
           confidence: 0.3

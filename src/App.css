@@ -22,9 +22,18 @@
   color: #61dafb;
 }
 
-.SymptomList {
+.List {
+  margin: 10px;
   padding: 20px;
   background-color: teal;
+}
+
+.word:hover {
+  color: teal
+}
+
+.transcript {
+  width: 60%
 }
 
 @keyframes App-logo-spin {
