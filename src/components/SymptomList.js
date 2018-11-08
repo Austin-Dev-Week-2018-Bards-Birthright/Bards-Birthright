@@ -47,7 +47,7 @@ class SymptomList extends Component {
 
   render() {
     return (
-      <div className="SymptomList">
+      <div className="List">
         <p>Here is your list of symptoms we found: </p>
         {this.state.symptoms.map((item, i) => {
           return <SymptomListItem key={i} symptom={item} />;

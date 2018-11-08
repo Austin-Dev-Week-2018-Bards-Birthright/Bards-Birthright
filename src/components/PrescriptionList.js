@@ -8,25 +8,23 @@ class PrescriptionList extends Component {
     super(props);
     this.state = {
       prescriptions: [],
-      isAddingSymptom: false,
-      newSymptom: ''
+      isAddingPrescription: false,
+      newPrescription: ''
     };
 
     this.changeText = function(e) {
-      this.setState({ newSymptom: e.target.value });
+      this.setState({ newPrescription: e.target.value });
     };
-    this.confirmSymptom = function() {
-      let newSymptomObj = {
-        confidence: 1,
-        end_ts: 0,
-        ts: -1,
-        type: 'text',
-        value: this.state.newSymptom
-      };
-      this.setState({ isAddingSymptom: false, symptoms: [...this.state.symptoms, newSymptomObj], newSymptom: '' });
+    this.confirmPrescription = function() {
+      let newPrescriptionObj = { confidence: 1, end_ts: 0, ts: -1, type: 'text', value: this.state.newPrescription };
+      this.setState({
+        isAddingPrescription: false,
+        prescriptions: [...this.state.prescriptions, newPrescriptionObj],
+        newPrescription: ''
+      });
     };
     this.changeText = this.changeText.bind(this);
-    this.confirmSymptom = this.confirmSymptom.bind(this);
+    this.confirmPrescription = this.confirmPrescription.bind(this);
   }
   componentDidMount() {
     let prescriptions = [];
@@ -41,17 +39,17 @@ class PrescriptionList extends Component {
   }
 
   render() {
-    return <div className="SymptomList">
+    return <div className="List">
         <p>Here is your list of prescriptions we found: </p>
         {this.state.prescriptions.map((item, i) => {
           return <PrescriptionListItem key={i} prescription={item} />;
         })}
-        {this.state.isAddingSymptom ? <div>
-            <input type="text" value={this.state.newSymptom} onChange={this.changeText} />
-            <button onClick={this.confirmSymptom}>Confirm</button>
+        {this.state.isAddingPrescription ? <div>
+            <input type="text" value={this.state.newPrescription} onChange={this.changeText} />
+            <button onClick={this.confirmPrescription}>Confirm</button>
           </div> : <div>
-            Add A Symptom <button
-              onClick={() => this.setState({ isAddingSymptom: true })}
+            Add A Prescription <button
+              onClick={() => this.setState({ isAddingPrescription: true })}
             >
               Add!
             </button>
