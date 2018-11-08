@@ -80,10 +80,10 @@ class SymptomList extends Component {
             </button>
           </div> : <div>
             Add A Symptom
-            <button className="btn-xs" onClick={() => this.setState({
+            <button className="add btn-xs" onClick={() => this.setState({
                   isAddingSymptom: true
                 })}>
-              Add!
+              <i class="add fas fa-plus"></i>
             </button>
           </div>}
       </div>;

@@ -17,13 +17,13 @@ class SymptomListItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      prescription : this.props.prescription,
+      prescription: this.props.prescription,
       isEditing: false,
       isClicked: false,
       context: ''
-    } 
+    }
     this.save = function () {
-      this.setState({ prescription: { ...this.state.prescription, confidence: 1 } }) 
+      this.setState({ prescription: { ...this.state.prescription, confidence: 1 } })
     };
     this.edit = function () {
       this.setState({
@@ -34,10 +34,10 @@ class SymptomListItem extends Component {
       this.setState({ prescription: {} })
     };
     this.changeText = function (e) {
-      this.setState({ prescription: { ...this.state.prescription, value: e.target.value, confidence: 1 } }) 
+      this.setState({ prescription: { ...this.state.prescription, value: e.target.value, confidence: 1 } })
     }
     this.handleClick = function () {
-      this.setState({isClicked : !this.state.isClicked})
+      this.setState({ isClicked: !this.state.isClicked })
       // console.log(' here is the context of that word ', this.state.context);
     }
     this.save = this.save.bind(this);
@@ -51,43 +51,43 @@ class SymptomListItem extends Component {
     this.props.sentences.forEach((sentence, i) => {
       if (sentence.includes(this.props.prescription.value)) {
         let context = sentence;
-        if (i > 0){
-          context = this.props.sentences[i-1] + context;
+        if (i > 0) {
+          context = this.props.sentences[i - 1] + context;
         }
-        if (i < this.props.sentences.length-1) {
-          context += this.props.sentences[i+1];
+        if (i < this.props.sentences.length - 1) {
+          context += this.props.sentences[i + 1];
         }
-        this.setState({context})
+        this.setState({ context })
       }
     });
   }
 
   render() {
     return this.state.isEditing ? <div>
-        <input type="text" value={this.state.prescription.value} onChange={this.changeText} />
-        <button onClick={() => this.setState({ isEditing: false })}>
-          Confirm
+      <input type="text" value={this.state.prescription.value} onChange={this.changeText} />
+      <button onClick={() => this.setState({ isEditing: false })}>
+        Confirm
         </button>
-      </div> : <div>
-        {this.state.isClicked ? 
-        <b onClick={this.handleClick}> {this.state.context}</b>
-        :
-        <div>
-        <b
-        onClick={this.handleClick}
-          style={{
-            color:
-              CONFIDENCE_DICTIONARY[
-                Math.floor(this.state.prescription.confidence * 10)
-              ]
-          }}
-        >
-          {this.state.prescription.value}{' '}
-        </b>
-            <button className='btn-xs' onClick={this.save}>approve</button>
-            <button className='btn-xs' onClick={this.edit}>edit</button>
-            <button className='btn-xs' onClick={this.delete}>delete</button>
-        </div>
+    </div> : <div>
+        {this.state.isClicked ?
+          <b onClick={this.handleClick}> {this.state.context}</b>
+          :
+          <div>
+            <b
+              onClick={this.handleClick}
+              style={{
+                color:
+                  CONFIDENCE_DICTIONARY[
+                  Math.floor(this.state.prescription.confidence * 10)
+                  ]
+              }}
+            >
+              {this.state.prescription.value}{' '}
+            </b>
+            <button className='btn-xs' onClick={this.save}><i className="approve far fa-thumbs-up"></i></button>
+            <button className='btn-xs' onClick={this.edit}><i class="edit far fa-edit"></i></button>
+            <button className='btn-xs' onClick={this.delete}><i class="delete far fa-trash-alt"></i></button>
+          </div>
         }
       </div>;
   }

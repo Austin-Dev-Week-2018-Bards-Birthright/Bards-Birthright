@@ -85,9 +85,9 @@ class SymptomListItem extends Component {
             >
               {this.state.symptom.value}
             </b>
-              <button className='btn-xs' onClick={this.save}>approve</button>
-              <button className='btn-xs' onClick={this.edit}>edit</button>
-              <button className='btn-xs' onClick={this.delete}>delete</button>
+              <button className='btn-xs' onClick={this.save}><i className="approve far fa-thumbs-up"></i></button>
+              <button className='btn-xs' onClick={this.edit}><i class="edit far fa-edit"></i></button>
+              <button className='btn-xs' onClick={this.delete}><i class="delete far fa-trash-alt"></i></button>
           </div>
         }
       </div>;
