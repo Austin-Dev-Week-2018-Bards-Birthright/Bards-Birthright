@@ -169,7 +169,6 @@ let PRESCRIPTION_DICTIONARY = {
   "acetazolamide": "acetazolamide",
   "celebrex": "celebrex",
   "capecitabine": "capecitabine",
-  "headache": "headache",
   "ketoprofen": "ketoprofen",
   "oxaliplatin": "oxaliplatin",
   "entacapone": "entacapone",
