@@ -27,6 +27,7 @@
 }
 
 .List {
+  border-radius: 25px;
   float: left;
   width: 45%;
   margin: 10px;
