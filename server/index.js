@@ -37,8 +37,24 @@ const loadCompletedTranscriptJobIntoMemory = (transcriptJobId) => {
   axios.get(`${process.env.REV_BASE_URL}/jobs/${transcriptJobId}/transcript`, { headers: headers })
     .then(transcript => {
       console.log(transcript.data.monologues);
-      console.log('cache: ', cache);
       cache.completedTranscriptJobs[transcriptJobId] = transcript.data.monologues;
+      console.log('cache: ', cache);
+    })
+    .catch(console.log);
+};
+
+const reloadCompletedTranscriptJobIntoMemory = (transcriptJobId) => {
+  const headers = {
+    'Authorization': `Bearer ${process.env.REV_API_KEY}`,
+    'Accept': 'application/vnd.rev.transcript.v1.0+json'
+  };
+
+  return axios.get(`${process.env.REV_BASE_URL}/jobs/${transcriptJobId}/transcript`, { headers: headers })
+    .then(transcript => {
+      console.log(transcript.data.monologues);
+      cache.completedTranscriptJobs[transcriptJobId] = transcript.data.monologues;
+      console.log('cache: ', cache);
+      return cache.completedTranscriptJobs[transcriptJobId];
     })
     .catch(console.log);
 };
@@ -138,10 +154,16 @@ app.post('/api/transcribe', bodyParser.raw({ limit: '50mb' }), (req, res) => {
 });
 
 // retrieve completed transcript for transcript_id
-app.get('/api/retrieve-transcript', (req, res) => {
-  let { transcript_id } = req.body;
-
-  // res.send(transcripts[id]).status(200);
+app.get('/api/retrieve-transcript/:transcriptJobId', (req, res) => {
+  let transcriptJobId = req.params.transcriptJobId;
+  console.log(req.params.transcriptJobId);
+  reloadCompletedTranscriptJobIntoMemory(transcriptJobId)
+  .then(()=> {
+    console.log(cache.completedTranscriptJobs[transcriptJobId]);
+    console.log(cache);
+    res.send(cache.completedTranscriptJobs[transcriptJobId]).status(200);
+  })
+  .catch (console.log);
 });
 
 let port = process.env.PORT || 8080;
