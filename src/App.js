@@ -37,6 +37,7 @@ class App extends Component {
   componentDidMount() {
     this.getAllTranscripts();
   }
+
   getTimeStamp(timeStamp) {
     this.setState({
       timeStamp: timeStamp
@@ -93,7 +94,6 @@ class App extends Component {
       () => { if (page === 'transcript') {
         this.getTranscriptData(this.state.currentJobId);
       }});
-   
   }
 
   uploadRecording(blob) {
