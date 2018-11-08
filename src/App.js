@@ -22,6 +22,7 @@ class App extends Component {
     this.state = {
       timeStamp: 0,
       page: 'recorder',
+      allTranscripts: [],
       transcriptData: null,
       currentJobId: null,
       currentAudioFile: null,
@@ -29,11 +30,16 @@ class App extends Component {
     }
     this.getTimeStamp = this.getTimeStamp.bind(this);
     this.changePage = this.changePage.bind(this);
+    this.getAllTranscripts = this.getAllTranscripts.bind(this);
     this.getTranscriptData = this.getTranscriptData.bind(this);
     this.uploadRecording = this.uploadRecording.bind(this);
     this.printPage = this.printPage.bind(this);
     this.tellRecorderToSaveCurrentAudioStream = this.tellRecorderToSaveCurrentAudioStream.bind(this);
     this.tellRecorderToStartRecording = this.tellRecorderToStartRecording.bind(this);
+  }
+
+  componentDidMount() {
+    this.getAllTranscripts();
   }
 
   getTimeStamp(timeStamp) {
@@ -42,27 +48,57 @@ class App extends Component {
     })
   }
 
-  getTranscriptData(jobId) {
-    fetch(`http://localhost:8080/api/retrieve-transcript/${jobId}`, {
+  getAllTranscripts() {
+    fetch('http://localhost:8080/api/retrieve-all-transcripts', {
       method: 'GET',
       mode: 'cors'
     })
-    .then((data)=>{
-      return data.json();
+      .then((data) => {
+        return data.json();
+      })
+      .then((data) => {
+        this.setState({
+          allTranscripts: data
+        }, () => console.log('got data', this.state.allTranscripts))
+      })
+      .catch(console.log);
+                      }
+
+  getTranscriptData(jobId) {
+    console.log('a job id', jobId);
+    let theJob = null;
+    this.state.allTranscripts.forEach(transcript => {
+      if (transcript.id === jobId ){
+        theJob = transcript;
+      }
+
     })
-    .then((data)=> {
-      this.setState({
-        transcriptData: data
-      }, console.log(this.state.transcriptData))
-    })
-    .catch (console.log);
+    this.setState({
+      transcriptData: theJob
+    }, () => console.log('got transcript', this.state.transcriptData))
+    // fetch(`http://localhost:8080/api/retrieve-transcript/${jobId}`, {
+    //   method: 'GET',
+    //   mode: 'cors'
+    // })
+    // .then((data)=>{
+    //   return data.json();
+    // })
+    // .then((data)=> {
+    //   this.setState({
+    //     transcriptData: data
+    //   }, console.log(this.state.transcriptData))
+    // })
+    // .catch (console.log);
+  
   }
 
-  changePage(page) {
-    this.setState({ page });
-    if(page==='transcript'){
-      this.getTranscriptData(this.state.currentJobId);
-    }
+  changePage(page, currentJobId) {
+    console.log(' in changepage: ', page, ' ', currentJobId);
+    this.setState({ page, currentJobId }, 
+      () => { if (page === 'transcript') {
+        console.log('current job id: ', this.state.currentJobId);
+        this.getTranscriptData(this.state.currentJobId);
+      }});
   }
 
   uploadRecording(blob) {
@@ -120,7 +156,7 @@ class App extends Component {
             <PrescriptionList transcriptData={this.state.transcriptData} />
           </div>
           <Transcript getTimeStamp={this.getTimeStamp} transcriptData={this.state.transcriptData} />
-          <Player timeStamp={this.state.timeStamp} currentAudioFile={this.state.currentAudioFile} />
+          <Player timeStamp={this.state.timeStamp} transcriptData={this.state.transcriptData} />
         </>;
     }
   }
@@ -128,14 +164,14 @@ class App extends Component {
   render() {
     return (
       <>
-        <Navbar changePage={this.changePage} printPage={this.printPage} />
+        <Navbar changePage={this.changePage} transcripts={this.state.allTranscripts} printPage={this.printPage} />
         <VoiceActivation tellRecorderToSaveCurrentAudioStream={this.tellRecorderToSaveCurrentAudioStream} tellRecorderToStartRecording={this.tellRecorderToStartRecording} />
         <div className="App">
           <header className="App-header">
             <h1>Transcript Buddy</h1>
             {this.renderPage()}
           </header>
-        </div >
+        </div>
       </>
     );
   }

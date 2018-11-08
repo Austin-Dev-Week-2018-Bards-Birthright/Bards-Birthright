@@ -9,6 +9,7 @@ const fs = require('fs');
 const request = require('request');
 const uuidv1 = require('uuid/v1');
 const db = require('../database/index.js');
+const wiki = require('./util/wikipedia.js');
 
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 app.use(bodyParser.json({ limit: '10mb', extended: true }));
@@ -19,9 +20,12 @@ app.use(express.static(__dirname + '../public/'));
 let cache = {
   completedTranscriptJobs: { },
   prescriptions: { },
-  symptoms: { }
+  symptoms: { },
+  fileNames: { }
 };
 
+// wiki.titleLookup('nausea', console.log);
+// console.log('test', wiki.titleLookup('nausea'));
 /**
  *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  *   REV API UTIL FUNCTIONS
@@ -38,7 +42,7 @@ const loadCompletedTranscriptJobIntoMemory = (transcriptJobId) => {
   axios.get(`${process.env.REV_BASE_URL}/jobs/${transcriptJobId}/transcript`, { headers: headers })
     .then(transcript => {
       cache.completedTranscriptJobs[transcriptJobId] = transcript.data.monologues;
-      let transcriptJobObj = { id: transcriptJobId, monologues: transcript.data.monologues };
+      let transcriptJobObj = { id: transcriptJobId, monologues: transcript.data.monologues, fileName: cache.fileNames[transcriptJobId], symptoms: [], prescriptions: []};
       db.insertTranscriptJobs(transcriptJobObj, (err, _) => {
         if (err) console.log(`error persisting transcript job ${transcriptJobId} to DB: ${err}`);
         else console.log(`successfully persisted transcription job ${transcriptJobId} to DB`);
@@ -147,9 +151,11 @@ app.post('/api/transcribe', bodyParser.raw({ limit: '50mb' }), (req, res) => {
       if (err) console.log(err);
       else {
         const transcriptJobId = JSON.parse(result.body).id;
+        const mp4FileName = file_url.split('/')[file_url.split('/').length - 1];
         console.log('job submitted: ', transcriptJobId);
         startTranscriptionJobPolling(transcriptJobId);
-        res.send({'fileName': file_url.split('/')[file_url.split('/').length - 1], 'transcriptJobId': transcriptJobId}).status(200);
+        cache.fileNames[transcriptJobId] = mp4FileName;
+        res.send({'fileName': mp4FileName, 'transcriptJobId': transcriptJobId}).status(200);
       }
     });
   });

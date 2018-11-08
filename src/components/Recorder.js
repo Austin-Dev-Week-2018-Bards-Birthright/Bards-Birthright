@@ -53,6 +53,7 @@ class Recorder extends Component {
     this.state.recordPointer.state === "recording" && this.state.recordPointer.stop();
     this.state.streamPointer.getTracks().forEach(track => track.stop());
     this.setState({ liveRec: false });
+    setTimeout(() => this.props.uploadRecording(this.state.blob), 5000);
   }
 
   dynamicColor() {
@@ -67,12 +68,6 @@ class Recorder extends Component {
     if (this.state.recordingSrc) {
       return (<>
         <audio id="recording" src={this.state.recordingSrc} controls></audio>
-        <a id="downloadButton" className="button" href={this.state.recordingSrc} download="test.mp3">
-          Download
-        </a>
-        <button id="uploadButton" className="button" onClick={() => this.props.uploadRecording(this.state.blob)}>
-          Upload
-        </button>
       </>);
     }
   }
@@ -80,19 +75,24 @@ class Recorder extends Component {
   recordingState() {
     if (this.state.liveRec) {
       return (
-        <>
-          <h1>YOU ARE LIVE RECORDING</h1>
-          <button id="stopBtn" onClick={() => this.clickStop()}>Stop</button>
-        </>
+        <div className="container">
+          <>
+            <h1>LIVE RECORDING</h1>
+            <div className="blink" id="stopBtn" onClick={() => this.clickStop()}><i className="far fa-stop-circle"></i></div>
+          </>
+        </div>
+
       )
     } else {
       return (
-        <>
-          <h2>click start to record audio</h2>
-          <button id="startBtn" onClick={() => this.clickStart()}>
-            Record
-          </button>
-        </>
+        <div className="container">
+          <>
+            <h2>click to record audio</h2>
+            <div id="startBtn" onClick={() => this.clickStart()}>
+              <i className="material-icons">&#xe39e;</i>
+            </div>
+          </>
+        </div>
       );
     }
   }
@@ -100,7 +100,12 @@ class Recorder extends Component {
   render() {
 
     return (
-      <div style={{ background: this.dynamicColor() }}>
+      // <div style={{ background: this.dynamicColor() }}>
+      //   {this.recordingState()}
+      //   {this.doneRecording()}
+      // </div>
+
+      <div>
         {this.recordingState()}
         {this.doneRecording()}
       </div>
