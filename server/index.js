@@ -167,8 +167,8 @@ app.get('/api/retrieve-all-transcripts', (req, res) => {
 });
 
 // retrieve completed transcript for transcript_id
-app.get('/api/retrieve-transcript', (req, res) => {
-  let { transcriptJobId } = req.body;
+app.get('/api/retrieve-transcript/:transcriptJobId', (req, res) => {
+  let transcriptJobId = req.params.transcriptJobId;
 
   db.retrieveSingleTranscriptJob(transcriptJobId, (err, transcriptJob) => {
     if (err) {
