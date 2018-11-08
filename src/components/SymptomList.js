@@ -62,31 +62,26 @@ class SymptomList extends Component {
   }
 
   render() {
-    return (
-      <div className="List">
+    return <div className="List">
         <p>Here is your list of symptoms we found: </p>
+
         {this.state.symptoms.map((item, i) => {
-          return <SymptomListItem key={i} symptom={item} sentences={this.sentences}/>;
+          return <SymptomListItem key={i} symptom={item} sentences={this.sentences} />;
         })}
-        {this.state.isAddingSymptom ? (
-          <div>
-            <input
-              type="text"
-              value={this.state.newSymptom}
-              onChange={this.changeText}
-            />
-            <button onClick={this.confirmSymptom}>Confirm</button>
-          </div>
-        ) : (
-          <div>
+        {this.state.isAddingSymptom ? <div>
+            <input type="text" value={this.state.newSymptom} onChange={this.changeText} />
+            <button className="btn-xs" onClick={this.confirmSymptom}>
+              Confirm
+            </button>
+          </div> : <div>
             Add A Symptom
-            <button onClick={() => this.setState({ isAddingSymptom: true })}>
+            <button className="btn-xs" onClick={() => this.setState({
+                  isAddingSymptom: true
+                })}>
               Add!
             </button>
-          </div>
-        )}
-      </div>
-    );
+          </div>}
+      </div>;
   }
 }
 

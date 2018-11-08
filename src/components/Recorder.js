@@ -7,7 +7,6 @@ class Recorder extends Component {
     this.state = { recordingSrc: '', recordPointer: null, blob: null, liveRec: false };
     this.clickStart = this.clickStart.bind(this);
     this.clickStop = this.clickStop.bind(this);
-    this.clickUpload = this.clickUpload.bind(this);
     this.dynamicColor = this.dynamicColor.bind(this);
     this.doneRecording = this.doneRecording.bind(this);
   }
@@ -50,18 +49,6 @@ class Recorder extends Component {
     this.setState({ liveRec: false });
   }
 
-  clickUpload() {
-    const url = 'http://localhost:8080/api/transcribe'
-    const oReq = new XMLHttpRequest();
-    oReq.open("POST", url, true);
-    oReq.onload = function (oEvent) {
-      console.log('uploaded');
-    };
-    oReq.setRequestHeader('Content-Type', 'application/octet-stream');
-    oReq.send(this.state.blob);
-  }
-
-
   dynamicColor() {
     if (this.state.liveRec) {
       return "red";
@@ -77,7 +64,7 @@ class Recorder extends Component {
         <a id="downloadButton" className="button" href={this.state.recordingSrc} download="test.mp3">
           Download
         </a>
-        <button id="uploadButton" className="button" onClick={() => this.clickUpload()}>
+        <button id="uploadButton" className="button" onClick={() => this.props.uploadRecording(this.state.blob)}>
           Upload
         </button>
       </>);

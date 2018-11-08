@@ -1,5 +1,6 @@
 import React from 'react';
 import Paragraph from './Paragraph.js';
+// eslint-disable-next-line no-unused-vars
 import { input, output } from '../sampleDataTranscriptionPretty.js';
 
 class Transcript extends React.Component {
@@ -18,7 +19,8 @@ class Transcript extends React.Component {
 					this.state.input.monologues.map((element, index) => {
 						return <Paragraph key={index} monologue={element} getTimeStamp={this.props.getTimeStamp}/>
 					})
-				}
+        }
+        <div>{this.props.transcriptData !== null && <div>{this.props.transcriptData[0].elements[0].value}</div>}</div>
 			</div>
 		)
 	}

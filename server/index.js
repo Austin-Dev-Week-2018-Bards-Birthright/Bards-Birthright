@@ -38,7 +38,21 @@ const loadCompletedTranscriptJobIntoMemory = (transcriptJobId) => {
   axios.get(`${process.env.REV_BASE_URL}/jobs/${transcriptJobId}/transcript`, { headers: headers })
     .then(transcript => {
       console.log(transcript.data.monologues);
+      cache.completedTranscriptJobs[transcriptJobId] = transcript.data.monologues;
       console.log('cache: ', cache);
+    })
+    .catch(console.log);
+};
+
+const reloadCompletedTranscriptJobIntoMemory = (transcriptJobId) => {
+  const headers = {
+    'Authorization': `Bearer ${process.env.REV_API_KEY}`,
+    'Accept': 'application/vnd.rev.transcript.v1.0+json'
+  };
+
+  return axios.get(`${process.env.REV_BASE_URL}/jobs/${transcriptJobId}/transcript`, { headers: headers })
+    .then(transcript => {
+      console.log(transcript.data.monologues);
       cache.completedTranscriptJobs[transcriptJobId] = transcript.data.monologues;
       let transcriptJobObj = { id: transcriptJobId, monologues: transcript.data.monologues };
       db.insertTranscriptJobs(transcriptJobObj, (err, _) => {

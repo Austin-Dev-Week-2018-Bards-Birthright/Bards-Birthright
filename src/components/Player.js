@@ -4,7 +4,7 @@ class Player extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      audioSrc: 'audio-2ac74f10.mp4', 
+      audioSrc: this.props.currentAudioFile, 
       currentTime: 10
     };
   }
