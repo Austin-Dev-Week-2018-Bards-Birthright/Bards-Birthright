@@ -9,18 +9,18 @@ class Transcript extends React.Component {
 		this.state = {
 			input: input
 		}
-
+console.log('props', props);
 	}
 
 	render() {
 		return (
 			<div className='transcript'>
         {
-					this.state.input.monologues.map((element, index) => {
+					this.state.props.map((element, index) => {
 						return <Paragraph key={index} monologue={element} getTimeStamp={this.props.getTimeStamp}/>
 					})
         }
-        <div>{this.props.transcriptData !== null && <div>{this.props.transcriptData[0].elements[0].value}</div>}</div>
+        {/* <div>{this.props.transcriptData !== null && <div>{this.props.transcriptData[0].elements[0].value}</div>}</div> */}
 			</div>
 		)
 	}

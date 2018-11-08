@@ -1,9 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
-
-const options = ['one', 'two', 'three'];
 const Navbar = (props) => {
-  // props.getList();
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light" >
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,10 +15,10 @@ const Navbar = (props) => {
               Transcripts
               </button>
             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-           { options.map((option, i) => {
-              return (
-                <a key={i} className="dropdown-item" href="#">{option}</a>
-              )
+           { props.transcripts.map((option, i) => {
+              return <a key={i} onClick={() => props.changePage('transcript', option.id)} className="dropdown-item" href="#">
+                  {option.id}
+                </a>;
             })}
             </div>
           </div>
