@@ -4,6 +4,7 @@ import './App.css';
 import Transcript from './components/Transcript.js';
 
 import SymptomList from './components/SymptomList.js';
+import PrescriptionList from './components/PrescriptionList.js';
 import Recorder from './components/Recorder';
 import Player from './components/Player';
 require('dotenv').config();
@@ -35,6 +36,7 @@ class App extends Component {
             Check console logs to see your keys
           </p>
         <SymptomList />
+        <PrescriptionList />
           <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
             Learn React
           </a>

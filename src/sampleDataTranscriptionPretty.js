@@ -1,4 +1,5 @@
 const input = {
+  symptoms: [],
   monologues: [
     {
       speaker: 1,

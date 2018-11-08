@@ -19,8 +19,8 @@ class SymptomList extends Component {
       let newSymptomObj = {
         confidence: 1,
         end_ts: 0,
-        ts: 0,
-        type: 'text',
+        ts: -1,
+        type: 'symptom',
         value: this.state.newSymptom
       };
       this.setState({ isAddingSymptom: false, symptoms: [...this.state.symptoms, newSymptomObj], newSymptom: '' });
@@ -30,6 +30,7 @@ class SymptomList extends Component {
   }
   componentDidMount() {
     let symptoms = [];
+    if (input.symptoms.length < 1){
     input.monologues.forEach(speaker => {
       speaker.elements.forEach(textChunk => {
         if (SYMPTOM_DICTIONARY[textChunk.value]) {
@@ -37,6 +38,10 @@ class SymptomList extends Component {
         }
       });
     });
+    } else {
+      //set state to input.symtoms
+    }
+    //send to DB
     this.setState({ symptoms });
   }
 
@@ -58,7 +63,7 @@ class SymptomList extends Component {
           </div>
         ) : (
           <div>
-            Add A Symptom{' '}
+            Add A Symptom
             <button onClick={() => this.setState({ isAddingSymptom: true })}>
               Add!
             </button>
