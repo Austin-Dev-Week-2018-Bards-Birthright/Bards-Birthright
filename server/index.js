@@ -7,8 +7,8 @@ const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
+app.use(bodyParser.json({ limit: '10mb', extended: true }));
 app.use(cors());
 app.use(express.static(__dirname + '../public/'));
 
@@ -52,7 +52,7 @@ const monitorTranscriptionJob = (transcriptJobId) => {
   };
 
   axios.get(`${process.env.REV_BASE_URL}/jobs/${transcriptJobId}`, { headers: headers })
-    .then(( transcriptJob ) => {
+    .then((transcriptJob) => {
       if (transcriptJob.data.status === 'transcribed') stopPollingInterval(transcriptJobId);
       return false;
     })
@@ -82,7 +82,7 @@ app.post('/api/transcribe', (req, res) => {
   };
 
   axios.post(`${process.env.REV_BASE_URL}/jobs`, { 'Content-Type': 'application/json', 'media_url': file_url }, { headers: headers })
-    .then( ({ data }) => {
+    .then(({ data }) => {
       console.log('job submitted: ', data);
       startTranscriptionJobPolling(data.id);
       res.send('job submitted successfully').status(200);
@@ -97,11 +97,11 @@ app.get('/api/retrieve-transcript', (req, res) => {
   // res.send(transcripts[id]).status(200);
 });
 
-app.post('/api/audio', bodyParser.raw(), (req, res) => {
+app.post('/api/audio', bodyParser.raw({ limit: '50mb', extended: true }), (req, res) => {
   fs.writeFile('./public/currentAudio.mp3', req.body, (err) => {
-      if (err) throw err;
-      res.send("Success");
-      console.log('The audio file has been saved!');
+    if (err) throw err;
+    res.send("Success");
+    console.log('The audio file has been saved!');
   })
 })
 
