@@ -61,6 +61,11 @@ class SymptomList extends Component {
     this.setState({ symptoms });
   }
 
+  componentWillReceiveProps(props) {
+    console.log('new props SymptomList', props);
+    // this.setState({ element: props.element });
+  }
+
   render() {
     return <div className="List">
         <p>Here is your list of symptoms we found: </p>
