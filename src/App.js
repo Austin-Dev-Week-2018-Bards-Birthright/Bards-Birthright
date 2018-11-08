@@ -38,7 +38,7 @@ class App extends Component {
   }
 
   getTranscriptData(jobId) {
-    fetch(`http://localhost:8080/api/retrieve-transcript/5290985`, {
+    fetch(`http://localhost:8080/api/retrieve-transcript/${jobId}`, {
       method: 'GET',
       mode: 'cors'
     })
