@@ -89,9 +89,10 @@ class App extends Component {
   }
 
   changePage(page, currentJobId) {
-    console.log(page, ' ', currentJobId);
+    console.log(' in changepage: ', page, ' ', currentJobId);
     this.setState({ page, currentJobId }, 
       () => { if (page === 'transcript') {
+        console.log('current job id: ', this.state.currentJobId);
         this.getTranscriptData(this.state.currentJobId);
       }});
   }
