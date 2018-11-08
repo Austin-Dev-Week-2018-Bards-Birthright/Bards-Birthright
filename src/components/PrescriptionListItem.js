@@ -19,7 +19,8 @@ class SymptomListItem extends Component {
     this.state = {
       prescription : this.props.prescription,
       isEditing: false,
-      context: 'I am context'
+      isClicked: false,
+      context: ''
     } 
     this.save = function () {
       this.setState({ prescription: { ...this.state.prescription, confidence: 1 } }) 
@@ -36,7 +37,8 @@ class SymptomListItem extends Component {
       this.setState({ prescription: { ...this.state.prescription, value: e.target.value, confidence: 1 } }) 
     }
     this.handleClick = function () {
-      console.log(' here is the context of that word ', this.state.context);
+      this.setState({isClicked : !this.state.isClicked})
+      // console.log(' here is the context of that word ', this.state.context);
     }
     this.save = this.save.bind(this);
     this.edit = this.edit.bind(this);
@@ -67,6 +69,10 @@ class SymptomListItem extends Component {
           Confirm
         </button>
       </div> : <div>
+        {this.state.isClicked ? 
+        <b onClick={this.handleClick}> {this.state.context}</b>
+        :
+        <div>
         <b
         onClick={this.handleClick}
           style={{
@@ -81,6 +87,8 @@ class SymptomListItem extends Component {
         <button onClick={this.save}>approve</button>
         <button onClick={this.edit}>edit</button>
         <button onClick={this.delete}>delete</button>
+        </div>
+        }
       </div>;
   }
 }
