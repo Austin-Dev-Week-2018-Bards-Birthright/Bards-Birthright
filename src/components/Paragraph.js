@@ -9,6 +9,10 @@ class Paragraph extends React.Component {
 		}
 
 	}
+	componentWillReceiveProps(props) {
+		console.log('changing the state', props.monologue);
+		this.setState({ content: props.monologue })
+	}
 
 	render() {
 		return (
