@@ -21,7 +21,7 @@ class SymptomListItem extends Component {
       isEditing: false
     } 
     this.save = function () {
-      // this.setState({ symptom: { ...this.state.symptom, confidence: 1 } }) 
+      this.setState({ prescription: { ...this.state.prescription, confidence: 1 } }) 
     };
     this.edit = function () {
       this.setState({
@@ -30,7 +30,7 @@ class SymptomListItem extends Component {
     };
 
     this.changeText = function (e) {
-      // this.setState({ symptom: { ...this.state.symptom, value: e.target.value, confidence: 1 } }) 
+      this.setState({ prescription: { ...this.state.prescription, value: e.target.value, confidence: 1 } }) 
     }
     this.save = this.save.bind(this);
     this.edit = this.edit.bind(this);

@@ -29,6 +29,19 @@ class PrescriptionList extends Component {
     this.confirmSymptom = this.confirmSymptom.bind(this);
   }
   componentDidMount() {
+    const arrayToObject = (array) =>
+      array.reduce((obj, item) => {
+        // console.log(obj);
+        // console.log(item.term);
+        if (!item.term.includes(' ')) {
+          obj[item.term.toLowerCase()] = item.term.toLowerCase()
+        }
+        return obj
+      }, {})
+
+    const ScriptObject = arrayToObject(PRESCRIPTION_DICTIONARY);
+    console.log(ScriptObject);
+
     // let symptoms = [];
     // input.monologues.forEach(speaker => {
     //   speaker.elements.forEach(textChunk => {
@@ -41,7 +54,7 @@ class PrescriptionList extends Component {
   }
 
   render() {
-    return <div className="PrescriptionList">
+    return <div className="SymptomList">
         <p>Here is your list of prescriptions we found: </p>
         {this.state.prescriptions.map((item, i) => {
           return <PrescriptionListItem key={i} prescription={item} />;
