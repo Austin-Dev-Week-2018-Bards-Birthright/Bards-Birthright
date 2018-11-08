@@ -128,9 +128,10 @@ app.post('/api/transcribe', bodyParser.raw({ limit: '50mb' }), (req, res) => {
     request.post(config, (err, result) => {
       if (err) console.log(err);
       else {
-        console.log('job submitted: ', JSON.parse(result.body).id);
-        startTranscriptionJobPolling(JSON.parse(result.body).id);
-        res.send(file_url).status(200);
+        const transcriptJobId = JSON.parse(result.body).id;
+        console.log('job submitted: ', transcriptJobId);
+        startTranscriptionJobPolling(transcriptJobId);
+        res.send({'fileName': file_url.split('/')[file_url.split('/').length - 1], 'transcriptJobId': transcriptJobId}).status(200);
       }
     });
   });
