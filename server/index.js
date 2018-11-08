@@ -42,7 +42,7 @@ const loadCompletedTranscriptJobIntoMemory = (transcriptJobId) => {
   axios.get(`${process.env.REV_BASE_URL}/jobs/${transcriptJobId}/transcript`, { headers: headers })
     .then(transcript => {
       cache.completedTranscriptJobs[transcriptJobId] = transcript.data.monologues;
-      let transcriptJobObj = { id: transcriptJobId, monologues: transcript.data.monologues, fileName:  cache.fileNames[transcriptJobId]};
+      let transcriptJobObj = { id: transcriptJobId, monologues: transcript.data.monologues, fileName: cache.fileNames[transcriptJobId], symptoms: {}, prescriptions: {}};
       db.insertTranscriptJobs(transcriptJobObj, (err, _) => {
         if (err) console.log(`error persisting transcript job ${transcriptJobId} to DB: ${err}`);
         else console.log(`successfully persisted transcription job ${transcriptJobId} to DB`);
