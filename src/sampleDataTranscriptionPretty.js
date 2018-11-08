@@ -3026,7 +3026,7 @@ const input = {
         },
         {
           type: 'punct',
-          value: ' '
+          value: '?'
         },
         {
           type: 'text',

@@ -83,12 +83,14 @@ class App extends Component {
         <Recorder uploadRecording={this.uploadRecording} />
       </>);
     } else {
-      return (<>
-        <SymptomList transcriptData={this.state.transcriptData} />
-        <PrescriptionList transcriptData={this.state.transcriptData} />
-        <Transcript getTimeStamp={this.getTimeStamp} transcriptData={this.state.transcriptData} />
-        <Player timeStamp={this.state.timeStamp} currentAudioFile={this.state.currentAudioFile} />
-      </>);
+      return <>
+          <div className='Lists'>
+            <SymptomList transcriptData={this.state.transcriptData} />
+            <PrescriptionList transcriptData={this.state.transcriptData} />
+          </div>
+          <Transcript getTimeStamp={this.getTimeStamp} transcriptData={this.state.transcriptData} />
+          <Player timeStamp={this.state.timeStamp} currentAudioFile={this.state.currentAudioFile} />
+        </>;
     }
   }
 
