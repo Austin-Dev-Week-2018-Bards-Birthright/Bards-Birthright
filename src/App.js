@@ -4,6 +4,7 @@ import './App.css';
 import Transcript from './components/Transcript.js';
 
 import SymptomList from './components/SymptomList.js';
+import PrescriptionList from './components/PrescriptionList.js';
 import Recorder from './components/Recorder';
 import Player from './components/Player';
 import Navbar from './components/Navbar';
@@ -40,6 +41,7 @@ class App extends Component {
     } else {
       return (<>
         <SymptomList />
+        <PrescriptionList />
         <Transcript getTimeStamp={this.getTimeStamp} />
         <Player timeStamp={this.state.timeStamp} />
       </>);
@@ -48,6 +50,7 @@ class App extends Component {
 
   render() {
     return (
+
       <>
         <Navbar changePage={this.changePage} />
         <div className="App">
