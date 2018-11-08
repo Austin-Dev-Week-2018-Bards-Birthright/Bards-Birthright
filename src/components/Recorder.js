@@ -77,7 +77,7 @@ class Recorder extends Component {
         <a id="downloadButton" className="button" href={this.state.recordingSrc} download="test.mp3">
           Download
         </a>
-        <button id="uploadButton" className="button" onClick={() => this.clickUpload()}>
+        <button id="uploadButton" className="button" onClick={() => this.props.uploadRecording(this.state.blob)}>
           Upload
         </button>
       </>);
