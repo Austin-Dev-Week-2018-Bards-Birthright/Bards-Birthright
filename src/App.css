@@ -22,10 +22,17 @@
   color: #61dafb;
 }
 
+.Lists {
+  width: 85%;
+}
+
 .List {
+  float: left;
+  width: 45%;
   margin: 10px;
   padding: 20px;
   background-color: teal;
+  min-height: 500px;
 }
 
 .word:hover {
