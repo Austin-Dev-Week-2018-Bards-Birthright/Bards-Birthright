@@ -7,7 +7,7 @@ class PrescriptionList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      prescriptions: [{value: 'meth'}, {value: 'nicotine'}, {value: 'vicoden'}],
+      prescriptions: [],
       isAddingSymptom: false,
       newSymptom: ''
     };
@@ -29,28 +29,15 @@ class PrescriptionList extends Component {
     this.confirmSymptom = this.confirmSymptom.bind(this);
   }
   componentDidMount() {
-    const arrayToObject = (array) =>
-      array.reduce((obj, item) => {
-        // console.log(obj);
-        // console.log(item.term);
-        if (!item.term.includes(' ')) {
-          obj[item.term.toLowerCase()] = item.term.toLowerCase()
+    let prescriptions = [];
+    input.monologues.forEach(speaker => {
+      speaker.elements.forEach(textChunk => {
+        if (PRESCRIPTION_DICTIONARY[textChunk.value]) {
+          prescriptions.push(textChunk);
         }
-        return obj
-      }, {})
-
-    const ScriptObject = arrayToObject(PRESCRIPTION_DICTIONARY);
-    console.log(ScriptObject);
-
-    // let symptoms = [];
-    // input.monologues.forEach(speaker => {
-    //   speaker.elements.forEach(textChunk => {
-    //     if (SYMPTOM_DICTIONARY[textChunk.value]) {
-    //       symptoms.push(textChunk);
-    //     }
-    //   });
-    // });
-    // this.setState({ symptoms });
+      });
+    });
+    this.setState({ prescriptions });
   }
 
   render() {
