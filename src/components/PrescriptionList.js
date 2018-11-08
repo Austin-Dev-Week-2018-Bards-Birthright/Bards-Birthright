@@ -58,11 +58,13 @@ class PrescriptionList extends Component {
         })}
         {this.state.isAddingPrescription ? <div>
             <input type="text" value={this.state.newPrescription} onChange={this.changeText} />
-            <button onClick={this.confirmPrescription}>Confirm</button>
+            <button className="btn-xs" onClick={this.confirmPrescription}>
+              Confirm
+            </button>
           </div> : <div>
-            Add A Prescription <button
-              onClick={() => this.setState({ isAddingPrescription: true })}
-            >
+            Add A Prescription <button className="btn-xs" onClick={() => this.setState(
+                  { isAddingPrescription: true }
+                )}>
               Add!
             </button>
           </div>}
