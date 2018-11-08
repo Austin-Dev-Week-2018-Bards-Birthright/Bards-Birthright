@@ -9,7 +9,7 @@ module.exports.insertTranscriptJobs = (transcriptJob, cb) => {
     const db = client.db(dbName);
     const collection = db.collection('transcripts');
 
-    collection.insert(transcriptJob, (err, result) => {
+    collection.insertOne(transcriptJob, (err, result) => {
       if (err) {
         client.close();
         cb(err);
