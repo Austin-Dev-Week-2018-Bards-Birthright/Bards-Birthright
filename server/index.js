@@ -9,6 +9,7 @@ const fs = require('fs');
 const request = require('request');
 const uuidv1 = require('uuid/v1');
 const db = require('../database/index.js');
+const wiki = require('./util/wikipedia.js');
 
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 app.use(bodyParser.json({ limit: '10mb', extended: true }));
@@ -23,6 +24,8 @@ let cache = {
   fileNames: { }
 };
 
+// wiki.titleLookup('nausea', console.log);
+// console.log('test', wiki.titleLookup('nausea'));
 /**
  *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  *   REV API UTIL FUNCTIONS
