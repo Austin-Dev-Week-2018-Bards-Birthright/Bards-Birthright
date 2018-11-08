@@ -11,7 +11,8 @@ class SymptomList extends Component {
       isAddingSymptom: false,
       isClicked: false,
       newSymptom: '',
-      output
+      output,
+      transcriptData: {}
     };
 
     this.changeText = function(e) {
@@ -22,7 +23,7 @@ class SymptomList extends Component {
         confidence: 1,
         end_ts: 0,
         ts: -1,
-        type: 'symptom',
+        type: 'text',
         value: this.state.newSymptom
       };
       this.setState({ isAddingSymptom: false, symptoms: [...this.state.symptoms, newSymptomObj], newSymptom: '' });
@@ -41,24 +42,28 @@ class SymptomList extends Component {
         sentence += e;
       }
     });
+  }
 
-
-
-
-    let symptoms = [];
-    if (input.symptoms.length < 1){
-    input.monologues.forEach(speaker => {
-      speaker.elements.forEach(textChunk => {
-        if (SYMPTOM_DICTIONARY[textChunk.value]) {
-          symptoms.push(textChunk);
-        }
-      });
-    });
-    } else {
-      //set state to input.symtoms
+  componentWillReceiveProps(props) {
+    // console.log('new props SymptomList', props.transcriptData);
+    this.setState({ transcriptData: props.transcriptData }, () => {
+      // console.log('transcript data', this.state.transcriptData);
+      let symptoms = [];
+      // console.log('object keys length ', Object.keys(this.state.transcriptData).length);
+      if (Object.keys(this.state.transcriptData).length) {
+        this.state.transcriptData.monologues.forEach(speaker => {
+          // console.log('speaker: ', speaker);
+          speaker.elements.forEach(textChunk => {
+            // console.log('textchunk ', textChunk);
+            if (SYMPTOM_DICTIONARY[textChunk.value.toLowerCase()]) {
+              symptoms.push(textChunk);
+            }
+          });
+        });
+      }
+      this.setState({ symptoms });
     }
-    //send to DB
-    this.setState({ symptoms });
+    )
   }
 
   render() {
