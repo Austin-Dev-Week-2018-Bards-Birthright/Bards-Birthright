@@ -38,7 +38,7 @@ class App extends Component {
   }
 
   getTranscriptData(jobId) {
-    fetch(`http://localhost:8080/api/retrieve-transcript/${jobId}`, {
+    fetch(`http://localhost:8080/api/retrieve-transcript/5290985`, {
       method: 'GET',
       mode: 'cors'
     })
@@ -47,8 +47,8 @@ class App extends Component {
     })
     .then((data)=> {
       this.setState({
-        transcriptData: data
-      }, console.log(this.state.transcriptData))
+        transcriptData: data[0]
+      }, console.log(data))
     })
     .catch (console.log);
   }
