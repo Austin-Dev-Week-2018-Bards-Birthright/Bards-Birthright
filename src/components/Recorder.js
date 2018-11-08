@@ -74,19 +74,24 @@ class Recorder extends Component {
   recordingState() {
     if (this.state.liveRec) {
       return (
-        <>
-          <h1>YOU ARE LIVE RECORDING</h1>
-          <button id="stopBtn" onClick={() => this.clickStop()}>Stop</button>
-        </>
+        <div className="container">
+          <>
+            <h1>LIVE RECORDING</h1>
+            <div className="blink" id="stopBtn" onClick={() => this.clickStop()}><i class="far fa-stop-circle"></i></div>
+          </>
+        </div>
+
       )
     } else {
       return (
-        <>
-          <h2>click start to record audio</h2>
-          <button id="startBtn" onClick={() => this.clickStart()}>
-            Record
-          </button>
-        </>
+        <div className="container">
+          <>
+            <h2>click to record audio</h2>
+            <div id="startBtn" onClick={() => this.clickStart()}>
+              <i class="material-icons">&#xe39e;</i>
+            </div>
+          </>
+        </div>
       );
     }
   }
@@ -94,7 +99,12 @@ class Recorder extends Component {
   render() {
 
     return (
-      <div style={{ background: this.dynamicColor() }}>
+      // <div style={{ background: this.dynamicColor() }}>
+      //   {this.recordingState()}
+      //   {this.doneRecording()}
+      // </div>
+
+      <div>
         {this.recordingState()}
         {this.doneRecording()}
       </div>
