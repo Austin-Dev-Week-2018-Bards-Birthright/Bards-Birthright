@@ -303,6 +303,10 @@ let PRESCRIPTION_DICTIONARY = {
   "acetylcysteine": "acetylcysteine",
   "assured": "assured",
   "belladonna": "belladonna",
-  "benzo-jel": "benzo-jel"
+  "benzo-jel": "benzo-jel",
+  "xanax": "xanax",
+  "morphine": "morphine",
+  "xanax": "xanax",
+
 }
 export default PRESCRIPTION_DICTIONARY;
