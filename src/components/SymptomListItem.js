@@ -83,11 +83,11 @@ class SymptomListItem extends Component {
               ]
           }}
         >
-          {this.state.symptom.value}{' '}
+          {this.state.symptom.value}
         </b>
-        <button onClick={this.save}>approve</button>
-        <button onClick={this.edit}>edit</button>
-        <button onClick={this.delete}>delete</button>
+        <button className='btn-xs' onClick={this.save}>approve</button>
+        <button className='btn-xs'onClick={this.edit}>edit</button>
+        <button className='btn-xs'onClick={this.delete}>delete</button>
         </div>
         }
       </div>;
