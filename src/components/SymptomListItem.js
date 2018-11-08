@@ -17,12 +17,12 @@ class SymptomListItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      symptom : this.props.symptom,
+      symptom: this.props.symptom,
       isEditing: false,
       context: ''
     }
     this.save = function () {
-      this.setState({ symptom: { ...this.state.symptom, confidence: 1 } }) 
+      this.setState({ symptom: { ...this.state.symptom, confidence: 1 } })
     };
     this.edit = function () {
       this.setState({
@@ -35,12 +35,12 @@ class SymptomListItem extends Component {
     };
 
     this.changeText = function (e) {
-      this.setState({ symptom: { ...this.state.symptom, value: e.target.value, confidence: 1 } }) 
+      this.setState({ symptom: { ...this.state.symptom, value: e.target.value, confidence: 1 } })
     }
     this.save = this.save.bind(this);
     this.edit = this.edit.bind(this);
     this.handleClick = function () {
-      this.setState({isClicked : !this.state.isClicked})
+      this.setState({ isClicked: !this.state.isClicked })
       console.log(' here is the context of that word ', this.state.context);
     }
     this.handleClick = this.handleClick.bind(this);
@@ -52,43 +52,43 @@ class SymptomListItem extends Component {
     this.props.sentences.forEach((sentence, i) => {
       if (sentence.includes(this.props.symptom.value)) {
         let context = sentence;
-        if (i > 0){
-          context = this.props.sentences[i-1] + context;
+        if (i > 0) {
+          context = this.props.sentences[i - 1] + context;
         }
-        if (i < this.props.sentences.length-1) {
-          context += this.props.sentences[i+1];
+        if (i < this.props.sentences.length - 1) {
+          context += this.props.sentences[i + 1];
         }
-        this.setState({context})
+        this.setState({ context })
       }
     });
   }
 
   render() {
     return this.state.isEditing ? <div>
-        <input type="text" value={this.state.symptom.value} onChange={this.changeText} />
-        <button onClick={() => this.setState({ isEditing: false })}>
-          Confirm
+      <input type="text" value={this.state.symptom.value} onChange={this.changeText} />
+      <button onClick={() => this.setState({ isEditing: false })}>
+        Confirm
         </button>
-      </div> : <div>
-        {this.state.isClicked ? 
-        <b onClick={this.handleClick}> {this.state.context}</b>
-        :
-        <div>
-        <b
-        onClick={this.handleClick}
-          style={{
-            color:
-              CONFIDENCE_DICTIONARY[
-                Math.floor(this.state.symptom.confidence * 10)
-              ]
-          }}
-        >
-          {this.state.symptom.value}
-        </b>
-        <button className='btn-xs' onClick={this.save}>approve</button>
-        <button className='btn-xs'onClick={this.edit}>edit</button>
-        <button className='btn-xs'onClick={this.delete}>delete</button>
-        </div>
+    </div> : <div>
+        {this.state.isClicked ?
+          <b onClick={this.handleClick}> {this.state.context}</b>
+          :
+          <div>
+            <b
+              onClick={this.handleClick}
+              style={{
+                color:
+                  CONFIDENCE_DICTIONARY[
+                  Math.floor(this.state.symptom.confidence * 10)
+                  ]
+              }}
+            >
+              {this.state.symptom.value}
+            </b>
+              <button className='btn-xs' onClick={this.save}>approve</button>
+              <button className='btn-xs' onClick={this.edit}>edit</button>
+              <button className='btn-xs' onClick={this.delete}>delete</button>
+          </div>
         }
       </div>;
   }
