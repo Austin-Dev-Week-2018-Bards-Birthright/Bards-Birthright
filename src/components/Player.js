@@ -21,7 +21,6 @@ class Player extends Component {
     this.clickJump();
     return (
       <div>
-        <button id="jumpBtn" onClick={() => this.clickJump()}>Jump</button>
         <audio id="playback" controls>
           <source src={this.state.audioSrc} type="audio/mp3"></source>
         </audio>
