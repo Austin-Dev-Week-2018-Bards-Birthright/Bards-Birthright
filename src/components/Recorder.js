@@ -60,13 +60,13 @@ class Recorder extends Component {
     oReq.setRequestHeader('Content-Type', 'application/octet-stream');
     oReq.send(this.state.blob);
   }
-  
+
 
   dynamicColor() {
     if (this.state.liveRec) {
       return "red";
     } else {
-      return "white";
+      return "#282c34";
     }
   }
 
@@ -76,8 +76,31 @@ class Recorder extends Component {
         <audio id="recording" src={this.state.recordingSrc} controls></audio>
         <a id="downloadButton" className="button" href={this.state.recordingSrc} download="test.mp3">
           Download
-      </a>
+        </a>
+        <button id="uploadButton" className="button" onClick={() => this.clickUpload()}>
+          Upload
+        </button>
       </>);
+    }
+  }
+
+  recordingState() {
+    if (this.state.liveRec) {
+      return (
+        <>
+          <h1>YOU ARE LIVE RECORDING</h1>
+          <button id="stopBtn" onClick={() => this.clickStop()}>Stop</button>
+        </>
+      )
+    } else {
+      return (
+        <>
+          <h2>click start to record audio</h2>
+          <button id="startBtn" onClick={() => this.clickStart()}>
+            Record
+          </button>
+        </>
+      );
     }
   }
 
@@ -85,18 +108,7 @@ class Recorder extends Component {
 
     return (
       <div style={{ background: this.dynamicColor() }}>
-        {this.state.liveRec ? <h1>YOU ARE LIVE RECORDING</h1> : <p>click start to record audio</p>}
-        <button id="startBtn" onClick={() => this.clickStart()}>
-          Start
-        </button>
-        <button id="stopBtn" onClick={() => this.clickStop()}>Stop</button>
-        <audio id="recording" src={this.state.recordingSrc} controls></audio>
-        <a id="downloadButton" className="button" href={this.state.recordingSrc} download="test.mp3">
-          Download
-        </a>
-        <button id="uploadButton" className="button" onClick={() => this.clickUpload()}>
-          Upload
-        </button>
+        {this.recordingState()}
         {this.doneRecording()}
       </div>
     );
