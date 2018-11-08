@@ -8,6 +8,7 @@ const path = require('path');
 const fs = require('fs');
 const request = require('request');
 const uuidv1 = require('uuid/v1');
+const db = require('../database/index.js');
 
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 app.use(bodyParser.json({ limit: '10mb', extended: true }));
@@ -39,6 +40,11 @@ const loadCompletedTranscriptJobIntoMemory = (transcriptJobId) => {
       console.log(transcript.data.monologues);
       console.log('cache: ', cache);
       cache.completedTranscriptJobs[transcriptJobId] = transcript.data.monologues;
+      let transcriptJobObj = { id: transcriptJobId, monologues: transcript.data.monologues };
+      db.insertTranscriptJobs(transcriptJobObj, (err, _) => {
+        if (err) console.log(`error persisting transcript job ${transcriptJobId} to DB: ${err}`);
+        else console.log(`successfully persisted transcription job ${transcriptJobId} to DB`);
+      });
     })
     .catch(console.log);
 };
@@ -137,12 +143,30 @@ app.post('/api/transcribe', bodyParser.raw({ limit: '50mb' }), (req, res) => {
   });
 });
 
-// retrieve completed transcript for transcript_id
-app.get('/api/retrieve-transcript', (req, res) => {
-  let { transcript_id } = req.body;
-
-  // res.send(transcripts[id]).status(200);
+app.get('/api/retrieve-all-transcripts', (req, res) => {
+  db.retrieveTranscriptJobs((err, transcriptJobs) => {
+    if (err) {
+      console.log('error retrieving transcript jobs: ', err);
+      res.sendStatus(500);
+    } else {
+      res.send(transcriptJobs);
+    }
+  });
 });
 
-let port = process.env.PORT || 8080;
+// retrieve completed transcript for transcript_id
+app.get('/api/retrieve-transcript', (req, res) => {
+  let { transcriptJobId } = req.body;
+
+  db.retrieveSingleTranscriptJob(transcriptJobId, (err, transcriptJob) => {
+    if (err) {
+      console.log('error retrieving single job: ', err);
+      res.sendStatus(500);
+    } else {
+      res.send(transcriptJob);
+    }
+  });
+});
+
+let port = process.env.PORT || 8000;
 app.listen(port, () => console.log(`server listening on port ${port}`));
