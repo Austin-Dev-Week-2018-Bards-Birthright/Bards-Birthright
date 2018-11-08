@@ -3,12 +3,13 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Transcript from './components/Transcript.js';
-
 import SymptomList from './components/SymptomList.js';
 import PrescriptionList from './components/PrescriptionList.js';
 import Recorder from './components/Recorder';
 import Player from './components/Player';
 import Navbar from './components/Navbar';
+import VoiceActivation from './components/VoiceActivation.js';
+
 require('dotenv').config();
 // eslint-disable-next-line no-unused-vars
 var DBURL = process.env.REACT_APP_DB_URL;
@@ -23,13 +24,16 @@ class App extends Component {
       page: 'recorder',
       transcriptData: null,
       currentJobId: null,
-      currentAudioFile: null
+      currentAudioFile: null,
+      recordingState: 'off'
     }
     this.getTimeStamp = this.getTimeStamp.bind(this);
     this.changePage = this.changePage.bind(this);
     this.getTranscriptData = this.getTranscriptData.bind(this);
     this.uploadRecording = this.uploadRecording.bind(this);
     this.printPage = this.printPage.bind(this);
+    this.tellRecorderToSaveCurrentAudioStream = this.tellRecorderToSaveCurrentAudioStream.bind(this);
+    this.tellRecorderToStartRecording = this.tellRecorderToStartRecording.bind(this);
   }
 
   getTimeStamp(timeStamp) {
@@ -90,10 +94,24 @@ class App extends Component {
     document.body.append(newIframe);
   }
 
+  tellRecorderToStartRecording() {
+    console.log('telling recording to start recording')
+    this.setState({
+      recordingState: 'on'
+    });
+  }
+
+  tellRecorderToSaveCurrentAudioStream() {
+    console.log('telling recording to stop recording and save')
+    this.setState({
+      recordingState: 'off'
+    });
+  }
+
   renderPage() {
     if (this.state.page === 'recorder') {
       return (<>
-        <Recorder uploadRecording={this.uploadRecording} />
+        <Recorder uploadRecording={this.uploadRecording} recordingState={this.state.recordingState}/>
       </>);
     } else {
       return <>
@@ -110,7 +128,8 @@ class App extends Component {
   render() {
     return (
       <>
-        <Navbar changePage={this.changePage} printPage={this.printPage}/>
+        <Navbar changePage={this.changePage} printPage={this.printPage} />
+        <VoiceActivation tellRecorderToSaveCurrentAudioStream={this.tellRecorderToSaveCurrentAudioStream} tellRecorderToStartRecording={this.tellRecorderToStartRecording} />
         <div className="App">
           <header className="App-header">
             <h1>Transcript Buddy</h1>
