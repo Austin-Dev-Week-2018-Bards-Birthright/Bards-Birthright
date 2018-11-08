@@ -39,12 +39,14 @@ class App extends Component {
         <Recorder />
       </>);
     } else {
-      return (<>
-        <SymptomList />
-        <PrescriptionList />
-        <Transcript getTimeStamp={this.getTimeStamp} />
-        <Player timeStamp={this.state.timeStamp} />
-      </>);
+      return <>
+          <div className='Lists'>
+            <SymptomList />
+            <PrescriptionList />
+          </div>
+          <Transcript getTimeStamp={this.getTimeStamp} />
+          <Player timeStamp={this.state.timeStamp} />
+        </>;
     }
   }
 
