@@ -21,21 +21,43 @@ class App extends Component {
     this.state = {
       timeStamp: 0,
       page: 'recorder',
+      allTranscripts: null,
       transcriptData: null,
       currentJobId: null,
       currentAudioFile: null
     }
     this.getTimeStamp = this.getTimeStamp.bind(this);
     this.changePage = this.changePage.bind(this);
+    this.getAllTranscripts = this.getAllTranscripts.bind(this);
     this.getTranscriptData = this.getTranscriptData.bind(this);
     this.uploadRecording = this.uploadRecording.bind(this);
   }
 
+  componentDidMount() {
+    this.getAllTranscripts();
+  }
   getTimeStamp(timeStamp) {
     this.setState({
       timeStamp: timeStamp
     })
   }
+
+  getAllTranscripts() {
+    fetch('http://localhost:8080/api/retrieve-all-transcripts', {
+      method: 'GET',
+      mode: 'cors'
+    })
+      .then((data) => {
+        return data.json();
+      })
+      .then((data) => {
+        console.log('here is data', data);
+        this.setState({
+          allTranscripts: data
+        }, () => console.log('here is everything', this.state.allTranscripts))
+      })
+      .catch(console.log);
+                      }
 
   getTranscriptData(jobId) {
     fetch(`http://localhost:8080/api/retrieve-transcript/${jobId}`, {
@@ -96,18 +118,15 @@ class App extends Component {
   
 
   render() {
-    return (
-
-      <>
-        <Navbar changePage={this.changePage} />
+    return <>
+        <Navbar changePage={this.changePage} getList={this.allTranscripts} />
         <div className="App">
           <header className="App-header">
             <h1>Transcript Buddy</h1>
             {this.renderPage()}
           </header>
-        </div >
-      </>
-    );
+        </div>
+      </>;
   }
 }
 

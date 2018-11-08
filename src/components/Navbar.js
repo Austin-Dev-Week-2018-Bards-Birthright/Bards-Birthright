@@ -1,8 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 
-const options = ['one', 'two', 'three']
+const options = ['one', 'two', 'three'];
 const Navbar = (props) => {
+  // props.getList();
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light" >
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,14 +13,14 @@ const Navbar = (props) => {
         <div className="navbar-nav">
           <a className="nav-item nav-link" href="#" onClick={() => props.changePage('recorder')}>Recorder</a>
           <a className="nav-item nav-link" href="#" onClick={() => props.changePage('transcript')}>Transcript</a>
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <div className="dropdown">
+            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Transcripts
               </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-           { options.map(option => {
+            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+           { options.map((option, i) => {
               return (
-                <a class="dropdown-item" href="#">{option}</a>
+                <a key={i} className="dropdown-item" href="#">{option}</a>
               )
             })}
             </div>
