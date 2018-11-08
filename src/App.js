@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+// eslint-disable-next-line no-unused-vars
 import logo from './logo.svg';
 import './App.css';
 import Transcript from './components/Transcript.js';
@@ -9,7 +10,9 @@ import Recorder from './components/Recorder';
 import Player from './components/Player';
 import Navbar from './components/Navbar';
 require('dotenv').config();
+// eslint-disable-next-line no-unused-vars
 var DBURL = process.env.REACT_APP_DB_URL;
+// eslint-disable-next-line no-unused-vars
 var REVKEY = process.env.REACT_APP_REV_API_KEY;
 
 class App extends Component {
@@ -56,10 +59,6 @@ class App extends Component {
       this.getTranscriptData(this.state.currentJobId);
     }
   }
-
-  // testFunc(response) {
-  //   this.setState
-  // }
 
   uploadRecording(blob) {
     const url = 'http://localhost:8080/api/transcribe'
