@@ -51,7 +51,7 @@ class Recorder extends Component {
   }
 
   clickUpload() {
-    const url = 'http://localhost:8080/api/audio'
+    const url = 'http://localhost:8080/api/transcribe'
     const oReq = new XMLHttpRequest();
     oReq.open("POST", url, true);
     oReq.onload = function (oEvent) {

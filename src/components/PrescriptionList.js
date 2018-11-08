@@ -9,9 +9,9 @@ class PrescriptionList extends Component {
     this.state = {
       prescriptions: [],
       isAddingPrescription: false,
-      newPrescription: ''
-    };
-
+      newPrescription: '',
+      output
+    }; 
     this.changeText = function(e) {
       this.setState({ newPrescription: e.target.value });
     };
@@ -36,13 +36,25 @@ class PrescriptionList extends Component {
       });
     });
     this.setState({ prescriptions });
+
+    this.sentences = [];
+    let sentence = '';
+    Array.from(this.state.output).forEach((e)=> {
+      if (e === '.' || e === '?') {
+        this.sentences.push(sentence + e)
+        sentence = ''
+      } else {
+        sentence += e;
+      }
+    });
+
   }
 
   render() {
     return <div className="List">
         <p>Here is your list of prescriptions we found: </p>
         {this.state.prescriptions.map((item, i) => {
-          return <PrescriptionListItem key={i} prescription={item} />;
+          return <PrescriptionListItem key={i} prescription={item} sentences={this.sentences} />;
         })}
         {this.state.isAddingPrescription ? <div>
             <input type="text" value={this.state.newPrescription} onChange={this.changeText} />
