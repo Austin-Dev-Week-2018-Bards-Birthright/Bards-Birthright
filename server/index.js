@@ -9,6 +9,8 @@ const fs = require('fs');
 const request = require('request');
 const uuidv1 = require('uuid/v1');
 const db = require('../database/index.js');
+const wiki = require('./util/wikipedia.js');
+const language = require('./util/googleNaturalLanguageApi.js');
 
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 app.use(bodyParser.json({ limit: '10mb', extended: true }));
@@ -19,15 +21,85 @@ app.use(express.static(__dirname + '../public/'));
 let cache = {
   completedTranscriptJobs: { },
   prescriptions: { },
-  symptoms: { }
+  symptoms: [],
+  fileNames: []
 };
 
+// language.getSentiments();
+// language.getEntities();
+wiki.titleLookup('nausea')
+.then(result => {
+  console.log(result);
+});
+// console.log('test', wiki.titleLookup('nausea'));
 /**
  *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  *   REV API UTIL FUNCTIONS
  *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 let intervalIds = {};
+
+let reattachObject = (symptomsArray, jobs, cb) => {
+  console.log('in reattach');
+  console.log(cb);
+  console.log('\n\n\n');
+  console.log(jobs[0].id);
+  const monologues = jobs[0].monologues;
+  let newSymptoms = [];
+  monologues.forEach((e,i)=> {
+    e.elements.forEach((e, i)=> {
+      symptomsArray.forEach((r, s) => {
+        if(e.value === r) {
+          newSymptoms.push(e);
+          console.log(e);
+        };
+      })
+    })
+  })
+  console.log(monologues);
+  console.log('in server', symptomsArray);
+  cb(jobs[0].id, newSymptoms)
+};
+
+let tired = (jobId, thing) => {
+  db.updateList(jobId, thing);
+  console.log(jobId);
+}
+
+const dummyFunction = (err, transcriptJobs) => {
+  if (err) {
+    console.log('error retrieving transcript jobs: ', err);
+  } else {
+    console.log(transcriptJobs);
+    console.log(transcriptJobs[0].monologues);
+    let newText = concatenateTranscriptAsScript(transcriptJobs[0].monologues);
+    console.log('transcriptJobs: ', transcriptJobs);
+    reattachObject = reattachObject.bind(this);
+    tired = tired.bind(this);
+    console.log('newText: ', transcriptJobs);
+    language.getEntities(newText, reattachObject, transcriptJobs, tired);
+    // language.getSentiments(newText);
+  }
+}
+
+const testLang = (jobId) => {
+  console.log('in testlang');
+  // console.log(reattachObject);
+  // console.log(tired);
+  console.log('\n\n\n');
+  console.log(jobId);
+  db.retrieveSingleTranscriptJob(jobId, dummyFunction);
+}
+
+const concatenateTranscriptAsScript = (monologues) => {
+  let output = '';
+  monologues.forEach((e,i)=>{
+    e.elements.forEach((e,i)=>{
+      output = output + e.value;
+    })
+  });
+  return output;
+}
 
 const loadCompletedTranscriptJobIntoMemory = (transcriptJobId) => {
   const headers = {
@@ -38,14 +110,25 @@ const loadCompletedTranscriptJobIntoMemory = (transcriptJobId) => {
   axios.get(`${process.env.REV_BASE_URL}/jobs/${transcriptJobId}/transcript`, { headers: headers })
     .then(transcript => {
       cache.completedTranscriptJobs[transcriptJobId] = transcript.data.monologues;
-      let transcriptJobObj = { id: transcriptJobId, monologues: transcript.data.monologues };
+      console.log(transcript.data.monologues);
+      // console.log(concatenateTranscriptAsScript)
+      let newText = concatenateTranscriptAsScript(transcript.data.monologues);
+      console.log(newText);
+      language.getEntities(newText);
+      language.getSentiments(newText);
+      let transcriptJobObj = { id: transcriptJobId, monologues: transcript.data.monologues, fileName: cache.fileNames[transcriptJobId], symptoms: [], prescriptions: []};
       db.insertTranscriptJobs(transcriptJobObj, (err, _) => {
         if (err) console.log(`error persisting transcript job ${transcriptJobId} to DB: ${err}`);
-        else console.log(`successfully persisted transcription job ${transcriptJobId} to DB`);
+        else {
+          testLang(transcriptJobId)
+          console.log(`successfully persisted transcription job ${transcriptJobId} to DB`);}
       });
     })
     .catch(console.log);
 };
+
+
+
 
 const reloadCompletedTranscriptJobIntoMemory = (transcriptJobId) => {
   const headers = {
@@ -147,9 +230,11 @@ app.post('/api/transcribe', bodyParser.raw({ limit: '50mb' }), (req, res) => {
       if (err) console.log(err);
       else {
         const transcriptJobId = JSON.parse(result.body).id;
+        const mp4FileName = file_url.split('/')[file_url.split('/').length - 1];
         console.log('job submitted: ', transcriptJobId);
         startTranscriptionJobPolling(transcriptJobId);
-        res.send({'fileName': file_url.split('/')[file_url.split('/').length - 1], 'transcriptJobId': transcriptJobId}).status(200);
+        cache.fileNames[transcriptJobId] = mp4FileName;
+        res.send({'fileName': mp4FileName, 'transcriptJobId': transcriptJobId}).status(200);
       }
     });
   });

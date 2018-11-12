@@ -9,20 +9,19 @@ const Navbar = (props) => {
       <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div className="navbar-nav">
           <a className="nav-item nav-link" href="#" onClick={() => props.changePage('recorder')}>Recorder</a>
-          <a className="nav-item nav-link" href="#" onClick={() => props.changePage('transcript')}>Transcript</a>
-          <a className="nav-item nav-link" href="#" onClick={() => props.printPage()}>Print to PDF</a>
           <div className="dropdown">
             <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Transcripts
               </button>
             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            { props.transcripts.map((option, i) => {
-              return <a key={i} onClick={() => props.changePage('transcript', option.id)} className="dropdown-item" href="#">
+              {props.transcripts.map((option, i) => {
+                return <a key={i} onClick={() => props.changePage('transcript', option.id)} className="dropdown-item" href="#">
                   {option.id}
                 </a>;
-            })}
+              })}
             </div>
           </div>
+          <a className="nav-item nav-link" href="#" onClick={() => props.printPage()}>Print to PDF</a>
         </div>
       </div>
     </nav>

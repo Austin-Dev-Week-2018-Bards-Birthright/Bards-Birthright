@@ -1,4 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
+require('dotenv').config();
 const url = process.env.DATABASE_URL;
 
 const dbName = 'bardsbirthright';
@@ -54,3 +55,24 @@ module.exports.retrieveSingleTranscriptJob = (transcriptJobId, cb) => {
     });
   });
 };
+
+module.exports.updateList = (transcriptJobId, list) => {
+  MongoClient.connect(url, { useNewUrlParser: true }, (err, client) => {
+    const db = client.db(dbName);
+    const collection = db.collection('transcripts');
+
+    collection.updateOne({ id: transcriptJobId }, { $set: { symptoms: list}}, (err, res) => {
+      if (err) console.log(err);
+      console.log(res);
+    })
+    // .toArray( (err, transcriptJobs) => {
+    //   if (err) {
+    //     client.close();
+    //     console.log('error retrieving transcriptJobs from DB: ', err);
+    //   } else {
+    //     client.close();
+    //     cb(null, transcriptJobs);
+    //   }
+    // });
+  });
+}

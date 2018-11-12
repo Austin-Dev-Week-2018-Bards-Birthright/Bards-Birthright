@@ -89,9 +89,10 @@ class App extends Component {
   }
 
   changePage(page, currentJobId) {
-    console.log(page, ' ', currentJobId);
+    console.log(' in changepage: ', page, ' ', currentJobId);
     this.setState({ page, currentJobId }, 
       () => { if (page === 'transcript') {
+        console.log('current job id: ', this.state.currentJobId);
         this.getTranscriptData(this.state.currentJobId);
       }});
   }
@@ -137,7 +138,7 @@ class App extends Component {
             <PrescriptionList transcriptData={this.state.transcriptData} />
           </div>
           <Transcript getTimeStamp={this.getTimeStamp} transcriptData={this.state.transcriptData} />
-          <Player timeStamp={this.state.timeStamp} currentAudioFile={this.state.currentAudioFile} />
+          <Player timeStamp={this.state.timeStamp} transcriptData={this.state.transcriptData} />
         </>;
     }
   }
